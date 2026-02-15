@@ -4,10 +4,13 @@
   "origin": "Mexico 🇲🇽",
   "description": "A Mexican Lasagna baked in a round pot. Layers of soft tortillas, creamy refried beans, and a saucy roasted veggie filling, all crowned with melted cheese.",
   "image": "images/recipes/vegetarian-pastel-azteca.jpg",
+  "difficulty": "Easy",
+  "cookingStyle": "One Pot",
   "prepTime": "15 min",
   "cookTime": "30 min",
   "servings": 4,
   "category": "Dinner",
+  "tags": ["Vegetarian", "Beans", "Savory"],
   "calories": 450,
   "ingredients": [
     { "name": "Large Soft Flour Tortillas", "amount": "5", "amountMetric": "5", "category": "Bakery", "aisle": "9" },
