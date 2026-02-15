@@ -4,10 +4,13 @@
   "origin": "Global 🌎",
   "description": "A sharp, acidic, and spicy macerated dressing designed to cut through rich meat sauces. Essential for the Smoky Chilli.",
   "image": "images/recipes/zesty-chilli-lime-dressing.jpg",
+  "difficulty": "Easy",
+  "cookingStyle": "No Cook",
   "prepTime": "5 min",
   "cookTime": "0 min",
   "servings": 6,
   "category": "Side",
+  "tags": ["Spicy", "Vegan", "Gluten Free"],
   "calories": 45,
   "ingredients": [
     { "name": "Fresh Red Chillies", "amount": "2", "amountMetric": "2", "category": "Produce", "aisle": "1" },
