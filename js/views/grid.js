@@ -116,21 +116,12 @@ function createCountControl(count, recipeId, onUpdateCount) {
 }
 
 /**
- * Create header toggle (metric/US switcher + PWA install)
+ * Create header toggle (metric/US switcher)
  */
 export function createHeaderToggle() {
   const state = getState();
   const container = document.createElement('div');
   container.className = 'header-toggle';
-  
-  // PWA install button
-  if (state.installPrompt) {
-    const installBtn = document.createElement('button');
-    installBtn.className = 'install-btn';
-    installBtn.appendChild(createIcon('Download', 14));
-    installBtn.onclick = handleInstallClick;
-    container.appendChild(installBtn);
-  }
   
   // Metric toggle
   const toggle = document.createElement('div');
@@ -143,21 +134,6 @@ export function createHeaderToggle() {
   container.appendChild(toggle);
   
   return container;
-}
-
-/**
- * Handle PWA install click
- */
-function handleInstallClick() {
-  const state = getState();
-  if (!state.installPrompt) return;
-  
-  state.installPrompt.prompt();
-  state.installPrompt.userChoice.then((result) => {
-    if (result.outcome === 'accepted') {
-      setState({ installPrompt: null });
-    }
-  });
 }
 
 /**

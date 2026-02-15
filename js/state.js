@@ -7,7 +7,6 @@ const state = {
   sortMode: 'aisle',
   useMetric: false,
   selectedRecipes: {},
-  installPrompt: null,
   recipeViewMode: 'overview',
   currentStepIndex: 0,
   recipes: []
@@ -29,6 +28,20 @@ export function getState() {
  */
 export function setState(updates) {
   Object.assign(state, updates);
+  
+  // Save persistable state to localStorage
+  const persistableState = {
+    shoppingList: state.shoppingList,
+    selectedRecipes: state.selectedRecipes,
+    sortMode: state.sortMode,
+    useMetric: state.useMetric
+  };
+  try {
+    localStorage.setItem('recipebliss-state', JSON.stringify(persistableState));
+  } catch (error) {
+    console.warn('Failed to save state to localStorage:', error);
+  }
+  
   notifyListeners();
 }
 
@@ -57,6 +70,21 @@ function notifyListeners() {
  * @param {Array} recipes - Array of recipe objects
  */
 export function initState(recipes) {
+  // Restore saved state from localStorage
+  try {
+    const savedState = localStorage.getItem('recipebliss-state');
+    if (savedState) {
+      const parsed = JSON.parse(savedState);
+      // Only restore persistable state properties
+      if (parsed.shoppingList) state.shoppingList = parsed.shoppingList;
+      if (parsed.selectedRecipes) state.selectedRecipes = parsed.selectedRecipes;
+      if (parsed.sortMode) state.sortMode = parsed.sortMode;
+      if (typeof parsed.useMetric === 'boolean') state.useMetric = parsed.useMetric;
+    }
+  } catch (error) {
+    console.warn('Failed to restore state from localStorage:', error);
+  }
+  
   state.recipes = recipes;
   notifyListeners();
 }

@@ -15,11 +15,15 @@ async function init() {
     const recipes = await loadAllRecipes();
     initState(recipes);
     
-    // Setup PWA install listener
-    window.addEventListener('beforeinstallprompt', (e) => {
-      e.preventDefault();
-      setState({ installPrompt: e });
-    });
+    // Register service worker for PWA
+    if ('serviceWorker' in navigator) {
+      try {
+        await navigator.serviceWorker.register('./sw.js');
+        console.log('Service Worker registered successfully');
+      } catch (error) {
+        console.log('Service Worker registration failed:', error);
+      }
+    }
     
     // Subscribe to state changes
     subscribe(render);
@@ -101,9 +105,11 @@ function createTab({ id, icon, label, showBadge = false }) {
   
   iconContainer.appendChild(createIcon(icon, 24));
   
-  if (showBadge && state.shoppingList.length > 0) {
+  // Always create badge element when showBadge is true, but hide it initially
+  if (showBadge) {
     const badge = document.createElement('span');
     badge.className = 'nav-badge';
+    badge.style.display = 'none'; // Hide initially
     badge.textContent = state.shoppingList.length;
     iconContainer.appendChild(badge);
   }

@@ -204,30 +204,11 @@ body {
   box-shadow: var(--shadow-sm);
 }
 
-/* Header Toggle (Metric/US + PWA Install) */
+/* Header Toggle (Metric/US) */
 .header-toggle {
   display: flex;
   gap: 0.5rem;
   align-items: center;
-}
-
-.install-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--color-emerald-600);
-  color: white;
-  border-radius: 50%;
-  width: 2rem;
-  height: 2rem;
-  border: none;
-  cursor: pointer;
-  box-shadow: var(--shadow);
-  transition: background 0.2s;
-}
-
-.install-btn:hover {
-  background: var(--color-emerald-700);
 }
 
 .metric-toggle {
