@@ -1,5 +1,5 @@
 // Shopping list view module
-import { getState, setState } from '../state.js';
+import { getState, setState, setStateQuiet } from '../state.js';
 import { createIcon, createButton } from '../components/ui.js';
 import { createHeaderToggle } from './grid.js';
 
@@ -144,6 +144,7 @@ function createShoppingItem(item) {
   const state = getState();
   const itemEl = document.createElement('div');
   itemEl.className = `shopping-item ${item.checked ? 'checked' : ''}`;
+  itemEl.dataset.itemId = item.id; // Add data attribute to identify the item
   itemEl.onclick = () => toggleShoppingItem(item.id);
   
   const checkbox = document.createElement('div');
@@ -207,7 +208,86 @@ function toggleShoppingItem(id) {
   const newList = state.shoppingList.map(item => 
     item.id === id ? { ...item, checked: !item.checked } : item
   );
-  setState({ shoppingList: newList });
+  
+  // Update state without triggering full re-render
+  setStateQuiet({ shoppingList: newList });
+  
+  // Targeted DOM update: Find and update only the changed item
+  const itemEl = document.querySelector(`.shopping-item[data-item-id="${id}"]`);
+  if (itemEl) {
+    const item = newList.find(i => i.id === id);
+    if (item) {
+      // Update classes
+      if (item.checked) {
+        itemEl.classList.add('checked');
+      } else {
+        itemEl.classList.remove('checked');
+      }
+      
+      // Update checkbox
+      const checkbox = itemEl.querySelector('.shopping-checkbox');
+      if (checkbox) {
+        if (item.checked) {
+          checkbox.classList.add('checked');
+          checkbox.innerHTML = createIcon('CheckCircle2', 14).outerHTML;
+        } else {
+          checkbox.classList.remove('checked');
+          checkbox.innerHTML = '';
+        }
+      }
+      
+      // Update item name
+      const nameEl = itemEl.querySelector('.shopping-item-name');
+      if (nameEl) {
+        if (item.checked) {
+          nameEl.classList.add('checked');
+        } else {
+          nameEl.classList.remove('checked');
+        }
+      }
+    }
+  }
+  
+  // Update the counter in the header
+  const counter = document.querySelector('.shopping-counter');
+  if (counter) {
+    const checkedCount = newList.filter(i => i.checked).length;
+    counter.textContent = `${checkedCount}/${newList.length}`;
+  }
+  
+  // Update or show clear button
+  const existingClearBtn = document.querySelector('.clear-checked-btn');
+  const hasCheckedItems = newList.some(i => i.checked);
+  
+  if (!hasCheckedItems && existingClearBtn) {
+    existingClearBtn.remove();
+  } else if (hasCheckedItems && !existingClearBtn) {
+    const container = document.querySelector('.shopping-list-view');
+    if (container) {
+      const clearBtn = document.createElement('button');
+      clearBtn.className = 'clear-checked-btn';
+      clearBtn.appendChild(createIcon('Trash2', 18));
+      const text = document.createElement('span');
+      text.textContent = 'Clear Checked';
+      clearBtn.appendChild(text);
+      clearBtn.onclick = clearCheckedItems;
+      container.appendChild(clearBtn);
+    }
+  }
+  
+  // Manually update bottom nav badge
+  const nav = document.getElementById('bottom-nav');
+  if (nav) {
+    const badge = nav.querySelector('.nav-badge');
+    if (badge) {
+      badge.textContent = newList.length;
+      if (newList.length > 0) {
+        badge.classList.add('visible');
+      } else {
+        badge.classList.remove('visible');
+      }
+    }
+  }
 }
 
 /**

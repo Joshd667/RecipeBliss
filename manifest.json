@@ -2,7 +2,7 @@
   "name": "RecipeBliss",
   "short_name": "RecipeBliss",
   "description": "Your personal recipe collection and smart shopping list",
-  "start_url": "/",
+  "start_url": ".",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#059669",
@@ -25,12 +25,12 @@
   "shortcuts": [
     {
       "name": "Browse Recipes",
-      "url": "/?tab=recipes",
+      "url": "./?tab=recipes",
       "description": "View all available recipes"
     },
     {
       "name": "Shopping List",
-      "url": "/?tab=shopping",
+      "url": "./?tab=shopping",
       "description": "View your shopping list"
     }
   ]
