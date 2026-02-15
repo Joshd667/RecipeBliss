@@ -2,6 +2,7 @@
 import { getState, setState, setStateQuiet } from '../state.js';
 import { createIcon, createButton } from '../components/ui.js';
 import { createHeaderToggle } from './grid.js';
+import { encodeBasket, getBasketShareUrl, copyToClipboard } from '../utils/sharing.js';
 
 /**
  * Render shopping list view
@@ -28,6 +29,13 @@ export function renderShoppingList() {
   const headerActions = document.createElement('div');
   headerActions.className = 'header-actions';
   headerActions.appendChild(createHeaderToggle());
+  
+  // Share basket button
+  const shareBasketBtn = document.createElement('button');
+  shareBasketBtn.className = 'share-basket-btn';
+  shareBasketBtn.innerHTML = createIcon('Share2', 20).outerHTML;
+  shareBasketBtn.onclick = () => showBasketShareModal();
+  headerActions.appendChild(shareBasketBtn);
   
   const checkedCount = state.shoppingList.filter(i => i.checked).length;
   const counter = document.createElement('div');
@@ -150,6 +158,78 @@ function renderEmptyState(container) {
   empty.appendChild(browseBtn);
   
   container.appendChild(empty);
+}
+
+/**
+ * Show basket share modal
+ */
+function showBasketShareModal() {
+  const state = getState();
+  const encodedBasket = encodeBasket(state.shoppingList, state.selectedRecipes, state.useMetric);
+  
+  if (!encodedBasket) {
+    alert('Failed to encode shopping list. Please try again.');
+    return;
+  }
+  
+  const shareUrl = getBasketShareUrl(encodedBasket);
+  
+  if (!shareUrl) {
+    alert('Shopping list is too large to share via URL. Please reduce the number of items and try again.');
+    return;
+  }
+  
+  // Create modal overlay
+  const modal = document.createElement('div');
+  modal.className = 'modal-overlay';
+  modal.innerHTML = `
+    <div class="modal-content share-modal">
+      <div class="modal-header">
+        <h2>Share Shopping List</h2>
+        <button class="modal-close-btn">${createIcon('X', 24).outerHTML}</button>
+      </div>
+      <div class="modal-body">
+        <p class="share-subtitle">${state.shoppingList.length} items • ${state.useMetric ? 'Metric' : 'US'} measurements</p>
+        <div class="share-url-container">
+          <input type="text" class="share-url-input" value="${shareUrl}" readonly />
+          <button class="btn btn-primary copy-btn">
+            ${createIcon('Copy', 18).outerHTML}
+            <span>Copy</span>
+          </button>
+        </div>
+        <p class="share-hint">Share this link with friends to let them import your shopping list!</p>
+      </div>
+    </div>
+  `;
+  
+  // Add event listeners
+  const closeBtn = modal.querySelector('.modal-close-btn');
+  closeBtn.onclick = () => document.body.removeChild(modal);
+  
+  const copyBtn = modal.querySelector('.copy-btn');
+  const urlInput = modal.querySelector('.share-url-input');
+  
+  copyBtn.onclick = async () => {
+    const success = await copyToClipboard(shareUrl);
+    if (success) {
+      copyBtn.innerHTML = `${createIcon('Check', 18).outerHTML} <span>Copied!</span>`;
+      copyBtn.classList.add('copied');
+      urlInput.select();
+      setTimeout(() => {
+        copyBtn.innerHTML = `${createIcon('Copy', 18).outerHTML} <span>Copy</span>`;
+        copyBtn.classList.remove('copied');
+      }, 2000);
+    }
+  };
+  
+  // Close on overlay click
+  modal.onclick = (e) => {
+    if (e.target === modal) {
+      document.body.removeChild(modal);
+    }
+  };
+  
+  document.body.appendChild(modal);
 }
 
 /**

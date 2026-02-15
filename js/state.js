@@ -9,7 +9,17 @@ const state = {
   selectedRecipes: {},
   recipeViewMode: 'overview',
   currentStepIndex: 0,
-  recipes: []
+  recipes: [],
+  filters: {
+    difficulty: [],
+    cookingStyle: [],
+    tags: [],
+    timeRange: [0, 180],
+    calorieRange: [0, 1000],
+    categories: []
+  },
+  showFilterPanel: false,
+  searchQuery: ''
 };
 
 const listeners = [];
@@ -82,8 +92,9 @@ function savePersistableState() {
 }
 
 /**
- * Initialize state with recipes
+ * Initialize state with recipes and handle URL parameters
  * @param {Array} recipes - Array of recipe objects
+ * @returns {Object} - Object with urlParams if any were found
  */
 export function initState(recipes) {
   // Restore saved state from localStorage
@@ -102,5 +113,17 @@ export function initState(recipes) {
   }
   
   state.recipes = recipes;
+  
+  // Check for URL parameters
+  const urlParams = new URLSearchParams(window.location.search);
+  const recipeParam = urlParams.get('recipe');
+  const basketParam = urlParams.get('basket');
+  
+  const result = {};
+  if (recipeParam) result.recipe = recipeParam;
+  if (basketParam) result.basket = basketParam;
+  
   notifyListeners();
+  
+  return result;
 }
