@@ -1,0 +1,129 @@
+{
+  "id": 17611,
+  "title": "Baked Beef Meatballs",
+  "origin": "Italy 🇮🇹",
+  "description": "A tasty twist on classic pasta. Tender beef meatballs are baked directly in a rich, homemade tomato sauce for maximum flavour and minimal cleanup, served over al dente linguine with a melting cheddar finish.",
+  "image": "images/recipes/baked-beef-meatballs.jpg",
+  "difficulty": "Easy",
+  "cookingStyle": "Traybake",
+  "prepTime": "15 mins",
+  "cookTime": "30 mins",
+  "servings": 2,
+  "category": "Dinner",
+  "tags": [
+    "Beef",
+    "Pasta",
+    "Italian",
+    "Comfort Food",
+    "Family Favorite"
+  ],
+  "calories": 775,
+  "ingredients": [
+    {
+      "name": "Linguine",
+      "amount": "6.7 oz",
+      "amountMetric": "190g",
+      "category": "Pasta, Rice & Grains",
+      "aisle": "6"
+    },
+    {
+      "name": "British Beef Mince",
+      "amount": "8.8 oz",
+      "amountMetric": "250g",
+      "category": "Meat & Poultry",
+      "aisle": "3"
+    },
+    {
+      "name": "Chopped Tomatoes",
+      "amount": "1 can",
+      "amountMetric": "400g",
+      "category": "Canned & Jarred",
+      "aisle": "6"
+    },
+    {
+      "name": "Baby Leaf Spinach",
+      "amount": "2.8 oz",
+      "amountMetric": "80g",
+      "category": "Produce",
+      "aisle": "2"
+    },
+    {
+      "name": "Cheddar Cheese",
+      "amount": "1.4 oz",
+      "amountMetric": "40g",
+      "category": "Dairy & Eggs",
+      "aisle": "4"
+    },
+    {
+      "name": "Panko Breadcrumbs",
+      "amount": "1 oz",
+      "amountMetric": "30g",
+      "category": "Pantry Staples",
+      "aisle": "6"
+    },
+    {
+      "name": "Red Onion",
+      "amount": "1",
+      "amountMetric": "1",
+      "category": "Produce",
+      "aisle": "2"
+    },
+    {
+      "name": "Beef Stock Cube",
+      "amount": "1",
+      "amountMetric": "1",
+      "category": "Baking & Spices",
+      "aisle": "7"
+    },
+    {
+      "name": "Balsamic Vinegar",
+      "amount": "1 tbsp",
+      "amountMetric": "15ml",
+      "category": "Baking & Spices",
+      "aisle": "7"
+    },
+    {
+      "name": "Tomato Paste",
+      "amount": "1 tbsp",
+      "amountMetric": "16g",
+      "category": "Canned & Jarred",
+      "aisle": "6"
+    },
+    {
+      "name": "Dried Oregano",
+      "amount": "1 tsp",
+      "amountMetric": "1 tsp",
+      "category": "Baking & Spices",
+      "aisle": "7"
+    },
+    {
+      "name": "Olive Oil",
+      "amount": "1 tbsp",
+      "amountMetric": "15ml",
+      "category": "Baking & Spices",
+      "aisle": "7"
+    },
+    {
+      "name": "Sugar",
+      "amount": "1 pinch",
+      "amountMetric": "1 pinch",
+      "category": "Baking & Spices",
+      "aisle": "7"
+    }
+  ],
+  "steps": [
+    "Preheat the oven to 200°C/ 180°C (fan)/ 400°F/ Gas 6.",
+    "Combine the beef mince, panko breadcrumbs, salt, and pepper in a bowl and mix thoroughly before rolling into 6 meatballs.",
+    "Peel and finely grate the red onion.",
+    "Place the meatballs over the grated onion in an oven-proof dish with a drizzle of olive oil and bake for 5-6 minutes to soften the onion.",
+    "Dissolve the stock cube, tomato paste, and a pinch of sugar in 150ml boiled water, then mix in oregano, vinegar, and chopped tomatoes.",
+    "Pour the tomato sauce into the baking dish and cook for 25-30 minutes until the sauce thickens to a ragù consistency.",
+    "Boil the linguine in salted water for 8-10 minutes until al dente, then drain.",
+    "Remove the dish from the oven, stir in the spinach to wilt, and serve over the linguine topped with grated cheddar and black pepper."
+  ],
+  "tips": [
+    "Grating the onion instead of chopping it allows it to melt into the sauce, creating a smoother texture and richer flavour base.",
+    "If the sauce thickens too much in the oven, splash a little pasta water in before serving to loosen it up.",
+    "Ensure the meatballs are evenly sized so they cook through at the same rate."
+  ]
+}
