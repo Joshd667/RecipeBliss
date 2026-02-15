@@ -105,11 +105,14 @@ function createTab({ id, icon, label, showBadge = false }) {
   
   iconContainer.appendChild(createIcon(icon, 24));
   
-  // Always create badge element when showBadge is true, but hide it initially
+  // Always create badge element when showBadge is true
   if (showBadge) {
     const badge = document.createElement('span');
     badge.className = 'nav-badge';
-    badge.textContent = state.shoppingList.length;
+    if (state.shoppingList.length > 0) {
+      badge.classList.add('visible');
+      badge.textContent = state.shoppingList.length;
+    }
     iconContainer.appendChild(badge);
   }
   

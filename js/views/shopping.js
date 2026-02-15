@@ -257,11 +257,11 @@ function toggleShoppingItem(id) {
   
   // Update or show clear button
   const existingClearBtn = document.querySelector('.clear-checked-btn');
-  const hasClearedItems = newList.some(i => i.checked);
+  const hasCheckedItems = newList.some(i => i.checked);
   
-  if (!hasClearedItems && existingClearBtn) {
+  if (!hasCheckedItems && existingClearBtn) {
     existingClearBtn.remove();
-  } else if (hasClearedItems && !existingClearBtn) {
+  } else if (hasCheckedItems && !existingClearBtn) {
     const container = document.querySelector('.shopping-list-view');
     if (container) {
       const clearBtn = document.createElement('button');

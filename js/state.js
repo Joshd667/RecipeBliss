@@ -34,6 +34,9 @@ export function setState(updates) {
 
 /**
  * Update state without triggering listeners (for internal optimizations)
+ * Use this when state changes need to be persisted to localStorage but should
+ * not trigger full UI re-renders. This is useful for optimizing specific UI
+ * updates that can be handled with targeted DOM manipulation instead.
  * @param {Object} updates - Partial state updates
  */
 export function setStateQuiet(updates) {
