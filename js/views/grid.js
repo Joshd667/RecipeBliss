@@ -17,9 +17,22 @@ function createRecipeCard(recipe, selectedCount, onToggleSelect, onUpdateCount) 
   
   // Set background image if recipe.image is provided
   if (recipe.image) {
-    imageDiv.style.backgroundImage = `url('${recipe.image}')`;
-    imageDiv.style.backgroundSize = 'cover';
-    imageDiv.style.backgroundPosition = 'center';
+    // Sanitize URL to prevent XSS - only allow http, https, and data URLs
+    try {
+      const url = new URL(recipe.image, window.location.href);
+      if (url.protocol === 'http:' || url.protocol === 'https:' || url.protocol === 'data:') {
+        imageDiv.style.backgroundImage = `url("${CSS.escape(recipe.image)}")`;
+        imageDiv.style.backgroundSize = 'cover';
+        imageDiv.style.backgroundPosition = 'center';
+      }
+    } catch (e) {
+      // Invalid URL - check if it's a relative path or data URL
+      if (recipe.image.startsWith('data:image/') || recipe.image.startsWith('/') || recipe.image.startsWith('./')) {
+        imageDiv.style.backgroundImage = `url("${CSS.escape(recipe.image)}")`;
+        imageDiv.style.backgroundSize = 'cover';
+        imageDiv.style.backgroundPosition = 'center';
+      }
+    }
   }
   
   // Top badges container
@@ -182,6 +195,13 @@ function createCountControl(count, recipeId, onUpdateCount) {
 }
 
 /**
+ * Get dark mode icon based on current state
+ */
+function getDarkModeIcon(isDark) {
+  return isDark ? createIcon('Moon', 20).outerHTML : createIcon('Sun', 20).outerHTML;
+}
+
+/**
  * Create header toggle (metric/US switcher and dark mode)
  */
 export function createHeaderToggle() {
@@ -189,22 +209,22 @@ export function createHeaderToggle() {
   const container = document.createElement('div');
   container.className = 'header-toggle';
   
+  // Check saved dark mode preference
+  const isDarkMode = localStorage.getItem('darkMode') === 'true';
+  if (isDarkMode) {
+    document.body.classList.add('dark-mode');
+  }
+  
   // Dark mode toggle
   const darkModeBtn = document.createElement('button');
   darkModeBtn.className = 'dark-mode-toggle';
-  darkModeBtn.innerHTML = createIcon('Sun', 20).outerHTML;
+  darkModeBtn.innerHTML = getDarkModeIcon(isDarkMode);
   darkModeBtn.setAttribute('aria-label', 'Toggle dark mode');
   darkModeBtn.onclick = () => {
     const isDark = document.body.classList.toggle('dark-mode');
-    darkModeBtn.innerHTML = isDark ? createIcon('Moon', 20).outerHTML : createIcon('Sun', 20).outerHTML;
+    darkModeBtn.innerHTML = getDarkModeIcon(isDark);
     localStorage.setItem('darkMode', isDark ? 'true' : 'false');
   };
-  
-  // Check saved dark mode preference
-  if (localStorage.getItem('darkMode') === 'true') {
-    document.body.classList.add('dark-mode');
-    darkModeBtn.innerHTML = createIcon('Moon', 20).outerHTML;
-  }
   
   container.appendChild(darkModeBtn);
   
