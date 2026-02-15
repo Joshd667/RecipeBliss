@@ -37,6 +37,9 @@
   --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
   --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
   --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+  
+  /* Layout */
+  --sidebar-width: 5rem;
 }
 
 /* Reset & Base Styles */
@@ -1075,6 +1078,33 @@ body {
   margin-right: 0.5rem;
 }
 
+/* Delete All Button */
+.delete-all-btn {
+  position: fixed;
+  bottom: 6rem;
+  left: 1.5rem;
+  background: var(--color-red-600);
+  color: white;
+  border: 1px solid var(--color-red-600);
+  box-shadow: var(--shadow-lg);
+  padding: 0.75rem 1rem;
+  border-radius: 9999px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: background 0.2s;
+  animation: zoomIn 0.3s ease-out;
+}
+
+.delete-all-btn:hover {
+  background: var(--color-red-500);
+}
+
+.delete-all-btn svg {
+  margin-right: 0.5rem;
+}
+
 /* Empty State */
 .empty-state {
   display: flex;
@@ -1215,4 +1245,210 @@ body {
 .error-state p {
   color: var(--color-slate-500);
   margin-bottom: 1.5rem;
+}
+
+/* ============================================
+   RESPONSIVE DESKTOP LAYOUT (768px+)
+   ============================================ */
+
+/* Desktop: Expand app container and center with max-width */
+@media (min-width: 768px) {
+  body {
+    background: var(--color-slate-50);
+  }
+  
+  #app {
+    max-width: 100%;
+    box-shadow: none;
+    display: flex;
+    min-height: 100vh;
+  }
+  
+  /* Convert bottom nav to left sidebar */
+  .bottom-nav {
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: auto;
+    width: var(--sidebar-width);
+    max-width: none;
+    transform: none;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 2rem 0;
+    border-top: none;
+    border-right: 1px solid var(--color-slate-100);
+    box-shadow: var(--shadow-sm);
+  }
+  
+  .nav-tab {
+    margin-bottom: 0.5rem;
+    width: 100%;
+  }
+  
+  .nav-tab:hover {
+    background: var(--color-slate-50);
+  }
+  
+  /* Main content area with left margin for sidebar */
+  .recipes-grid-view,
+  .shopping-list-view,
+  .recipe-detail-view {
+    margin-left: var(--sidebar-width);
+    padding-left: 2rem;
+    padding-right: 2rem;
+    max-width: 1200px;
+    margin-right: auto;
+  }
+  
+  /* Adjust padding for views */
+  .recipes-grid-view {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+  
+  .shopping-list-view,
+  .recipe-detail-view {
+    padding-bottom: 2rem;
+  }
+  
+  /* Header improvements */
+  .grid-header {
+    margin-bottom: 2.5rem;
+  }
+  
+  .page-title {
+    font-size: 2rem;
+  }
+  
+  .page-subtitle {
+    font-size: 1rem;
+  }
+  
+  /* Recipe grid - already has 2-3 column layout */
+  .recipe-grid {
+    gap: 2rem;
+  }
+  
+  .recipe-card:hover {
+    transform: translateY(-4px);
+  }
+  
+  /* Selection banner positioning */
+  .selection-banner {
+    left: calc(var(--sidebar-width) + 2rem);
+    right: 2rem;
+    bottom: 2rem;
+    max-width: 1150px;
+  }
+  
+  /* Shopping list multi-column groups on larger screens */
+  .shopping-content {
+    padding: 2rem;
+  }
+  
+  .shopping-header {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+  
+  /* Clear checked and delete all buttons positioning */
+  .clear-checked-btn {
+    bottom: 2rem;
+    right: 2rem;
+  }
+  
+  .delete-all-btn {
+    bottom: 2rem;
+    left: calc(var(--sidebar-width) + 2rem);
+  }
+  
+  /* Recipe detail view improvements */
+  .recipe-hero {
+    height: 20rem;
+  }
+  
+  .hero-title {
+    font-size: 2.5rem;
+  }
+  
+  .recipe-content {
+    padding: 2rem;
+  }
+  
+  /* Step by step view */
+  .step-by-step-view {
+    margin-left: var(--sidebar-width);
+  }
+}
+
+/* Desktop: Larger screens (1024px+) - Enhanced layout */
+@media (min-width: 1024px) {
+  .recipes-grid-view,
+  .shopping-list-view,
+  .recipe-detail-view {
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+  
+  /* Shopping list: Multi-column layout for groups */
+  .shopping-content {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    padding: 2rem 3rem;
+  }
+  
+  .shopping-group {
+    margin-bottom: 0;
+  }
+  
+  /* Recipe detail: Side-by-side layout */
+  .recipe-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    padding: 3rem;
+  }
+  
+  .recipe-description {
+    grid-column: 1 / -1;
+  }
+  
+  .recipe-actions {
+    grid-column: 1 / -1;
+  }
+  
+  .ingredients-section {
+    grid-column: 1;
+  }
+  
+  .method-section {
+    grid-column: 2;
+    grid-row: 3 / span 2;
+  }
+  
+  .tips-section {
+    grid-column: 1 / -1;
+  }
+  
+  /* Larger hero on desktop */
+  .recipe-hero {
+    height: 24rem;
+  }
+  
+  .hero-title {
+    font-size: 3rem;
+  }
+}
+
+/* Desktop: Extra large screens (1440px+) - Max content width */
+@media (min-width: 1440px) {
+  .recipes-grid-view,
+  .shopping-list-view,
+  .recipe-detail-view {
+    margin-left: auto;
+    padding-left: calc(var(--sidebar-width) + 3rem);
+  }
 }

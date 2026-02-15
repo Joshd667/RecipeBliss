@@ -99,6 +99,21 @@ export function renderShoppingList() {
     clearBtn.onclick = clearCheckedItems;
     container.appendChild(clearBtn);
   }
+  
+  // Delete all button
+  if (state.shoppingList.length > 0) {
+    const deleteAllBtn = document.createElement('button');
+    deleteAllBtn.className = 'delete-all-btn';
+    const icon = createIcon('Trash2', 18);
+    if (icon) {
+      deleteAllBtn.appendChild(icon);
+    }
+    const text = document.createElement('span');
+    text.textContent = 'Delete All';
+    deleteAllBtn.appendChild(text);
+    deleteAllBtn.onclick = deleteAllItems;
+    container.appendChild(deleteAllBtn);
+  }
 }
 
 /**
@@ -297,6 +312,17 @@ function clearCheckedItems() {
   const state = getState();
   const newList = state.shoppingList.filter(item => !item.checked);
   setState({ shoppingList: newList });
+}
+
+/**
+ * Delete all items from shopping list
+ * Note: Uses native confirm() for simplicity. In production, consider
+ * implementing a custom modal with proper ARIA attributes for better accessibility.
+ */
+function deleteAllItems() {
+  if (confirm('Are you sure you want to delete all items from your shopping list?')) {
+    setState({ shoppingList: [] });
+  }
 }
 
 /**
