@@ -4,10 +4,13 @@
   "origin": "Brazil 🇧🇷",
   "description": "A vibrant, golden seafood stew. Mild white fish is 'cured' in lime to remove any fishiness, then baked in a creamy, aromatic coconut and turmeric sauce.",
   "image": "images/recipes/bahian-coconut-lime-fish.jpg",
+  "difficulty": "Easy",
+  "cookingStyle": "Traybake",
   "prepTime": "10 min",
   "cookTime": "25 min",
   "servings": 4,
   "category": "Dinner",
+  "tags": ["Seafood", "Gluten Free", "Mild"],
   "calories": 420,
   "ingredients": [
     { "name": "Cod or Haddock Loins", "amount": "4 (thick)", "amountMetric": "4 (600g)", "category": "Seafood", "aisle": "12" },
