@@ -20,7 +20,7 @@ async function init() {
       try {
         await navigator.serviceWorker.register('./sw.js');
       } catch (error) {
-        // Service worker registration failed silently
+        console.error('Service Worker registration failed:', error);
       }
     }
     
