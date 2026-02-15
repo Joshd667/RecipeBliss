@@ -20,7 +20,6 @@ self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then((cache) => {
-        console.log('Caching app shell');
         return cache.addAll(CACHE_URLS);
       })
       .then(() => self.skipWaiting())
@@ -35,7 +34,6 @@ self.addEventListener('activate', (event) => {
         return Promise.all(
           cacheNames.map((cacheName) => {
             if (cacheName !== CACHE_NAME) {
-              console.log('Deleting old cache:', cacheName);
               return caches.delete(cacheName);
             }
           })
@@ -98,7 +96,6 @@ self.addEventListener('fetch', (event) => {
           })
           .catch(() => {
             // Return offline fallback for failed requests
-            console.log('Fetch failed, serving offline content');
             return new Response('Offline', {
               status: 503,
               statusText: 'Service Unavailable',
