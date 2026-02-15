@@ -187,8 +187,7 @@ export function renderRecipesGrid() {
   // Search bar
   const searchContainer = document.createElement('div');
   searchContainer.className = 'search-container';
-  const searchIcon = createIcon('Search', 20);
-  searchIcon.className = 'search-icon';
+  const searchIcon = createIcon('Search', 20, 'search-icon');
   searchContainer.appendChild(searchIcon);
   const searchInput = document.createElement('input');
   searchInput.type = 'text';

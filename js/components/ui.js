@@ -55,7 +55,7 @@ export function createIcon(name, size = 24, className = '') {
   if (svg) {
     svg.setAttribute('width', size);
     svg.setAttribute('height', size);
-    if (className) svg.className = className;
+    if (className) svg.setAttribute('class', className);
   }
   return svg;
 }
