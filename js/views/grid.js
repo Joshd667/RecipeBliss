@@ -204,16 +204,24 @@ export function renderRecipesGrid() {
   // Header
   const header = document.createElement('div');
   header.className = 'grid-header';
-  header.innerHTML = `
+  
+  const headerTitle = document.createElement('div');
+  headerTitle.className = 'page-title-container';
+  headerTitle.innerHTML = `
+    ${createIcon('ChefHat', 28).outerHTML}
     <div>
-      <h1 class="page-title">Discover</h1>
+      <h1 class="page-title">RecipeBliss</h1>
       <p class="page-subtitle">What are we cooking today?</p>
     </div>
-    <div class="header-actions">
-      ${createHeaderToggle().outerHTML}
-      <div class="avatar"></div>
-    </div>
   `;
+  
+  header.appendChild(headerTitle);
+  
+  const headerActions = document.createElement('div');
+  headerActions.className = 'header-actions';
+  headerActions.appendChild(createHeaderToggle());
+  header.appendChild(headerActions);
+  
   container.appendChild(header);
   
   // Search bar with filter button
