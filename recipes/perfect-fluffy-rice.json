@@ -4,10 +4,13 @@
   "origin": "Global 🌎",
   "description": "The fail-safe absorption technique for Basmati or Long Grain. Rinsing and steaming are the secrets to perfectly separated grains without a rice cooker.",
   "image": "images/recipes/perfect-fluffy-rice.jpg",
+  "difficulty": "Easy",
+  "cookingStyle": "Stovetop",
   "prepTime": "5 min",
   "cookTime": "25 min",
   "servings": 4,
   "category": "Side",
+  "tags": ["Rice", "Vegan", "Gluten Free"],
   "calories": 200,
   "ingredients": [
     { "name": "Basmati OR Long Grain Rice", "amount": "1.5 cups", "amountMetric": "300g", "category": "Pantry", "aisle": "4" },
