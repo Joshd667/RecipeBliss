@@ -8,7 +8,14 @@ export async function loadAllRecipes() {
   try {
     // Fetch the recipe index manifest
     const indexResponse = await fetch('recipes/index.json');
+    if (!indexResponse.ok) {
+      throw new Error(`Failed to load recipe index: ${indexResponse.status}`);
+    }
     const recipeFiles = await indexResponse.json();
+    
+    if (!Array.isArray(recipeFiles)) {
+      throw new Error('Recipe index must be an array of filenames');
+    }
     
     // Fetch all recipe JSON files
     const promises = recipeFiles.map(filename =>
