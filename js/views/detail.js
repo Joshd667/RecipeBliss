@@ -2,6 +2,7 @@
 import { getState, setState } from '../state.js';
 import { createIcon, createButton } from '../components/ui.js';
 import { createHeaderToggle } from './grid.js';
+import { getRecipeShareUrl, copyToClipboard } from '../utils/sharing.js';
 
 /**
  * Render recipe detail view
@@ -42,27 +43,61 @@ function renderRecipeOverview(recipe) {
   headerToggle.classList.add('hero-toggle');
   hero.appendChild(headerToggle);
   
+  // Share button
+  const shareBtn = document.createElement('button');
+  shareBtn.className = 'share-btn';
+  shareBtn.appendChild(createIcon('Share2', 20));
+  shareBtn.onclick = () => showRecipeShareModal(recipe);
+  hero.appendChild(shareBtn);
+  
   const heroContent = document.createElement('div');
   heroContent.className = 'hero-content';
+  
+  // Hero badges with difficulty and cooking style
+  const badges = [`<div class="badge badge-category">${recipe.category}</div>`];
+  if (recipe.origin) {
+    badges.push(`<div class="badge badge-origin">${recipe.origin}</div>`);
+  }
+  if (recipe.difficulty) {
+    badges.push(`<div class="badge badge-difficulty difficulty-${recipe.difficulty.toLowerCase()}">${recipe.difficulty}</div>`);
+  }
+  if (recipe.cookingStyle) {
+    badges.push(`<div class="badge badge-cooking-style">${recipe.cookingStyle}</div>`);
+  }
+  
   heroContent.innerHTML = `
     <div class="hero-badges">
-      <div class="badge badge-category">${recipe.category}</div>
-      ${recipe.origin ? `<div class="badge badge-origin">${recipe.origin}</div>` : ''}
+      ${badges.join('')}
     </div>
     <h1 class="hero-title">${recipe.title}</h1>
   `;
   hero.appendChild(heroContent);
   container.appendChild(hero);
   
-  // Stats bar
+  // Stats bar with separate prep and cook time
   const stats = document.createElement('div');
   stats.className = 'recipe-stats';
-  stats.innerHTML = `
-    <div class="stat">
-      ${createIcon('Clock', 20).outerHTML}
-      <span class="stat-label">TOTAL</span>
-      <span class="stat-value">${recipe.cookTime}</span>
-    </div>
+  
+  const statsHtml = [];
+  if (recipe.prepTime) {
+    statsHtml.push(`
+      <div class="stat">
+        ${createIcon('Clock', 20).outerHTML}
+        <span class="stat-label">PREP</span>
+        <span class="stat-value">${recipe.prepTime}</span>
+      </div>
+    `);
+  }
+  if (recipe.cookTime) {
+    statsHtml.push(`
+      <div class="stat">
+        ${createIcon('Flame', 20).outerHTML}
+        <span class="stat-label">COOK</span>
+        <span class="stat-value">${recipe.cookTime}</span>
+      </div>
+    `);
+  }
+  statsHtml.push(`
     <div class="stat">
       ${createIcon('Users', 20).outerHTML}
       <span class="stat-label">SERVES</span>
@@ -73,7 +108,9 @@ function renderRecipeOverview(recipe) {
       <span class="stat-label">STEPS</span>
       <span class="stat-value">${recipe.steps.length}</span>
     </div>
-  `;
+  `);
+  
+  stats.innerHTML = statsHtml.join('');
   container.appendChild(stats);
   
   // Content
@@ -85,6 +122,19 @@ function renderRecipeOverview(recipe) {
   desc.className = 'recipe-description';
   desc.textContent = recipe.description;
   content.appendChild(desc);
+  
+  // Tags display
+  if (recipe.tags && recipe.tags.length > 0) {
+    const tagsSection = document.createElement('div');
+    tagsSection.className = 'recipe-tags-section';
+    recipe.tags.forEach(tag => {
+      const tagChip = document.createElement('span');
+      tagChip.className = 'tag-chip-large';
+      tagChip.innerHTML = `${createIcon('Tag', 14).outerHTML} ${tag}`;
+      tagsSection.appendChild(tagChip);
+    });
+    content.appendChild(tagsSection);
+  }
   
   // Action buttons
   const actions = document.createElement('div');
@@ -159,28 +209,33 @@ function renderRecipeOverview(recipe) {
   methodSection.appendChild(methodList);
   content.appendChild(methodSection);
   
-  // Chef's Tips
+  // Chef's Tips - Enhanced expandable cards
   if (recipe.tips && recipe.tips.length > 0) {
     const tipsSection = document.createElement('div');
     tipsSection.className = 'tips-section';
     tipsSection.innerHTML = `
-      <h3 class="tips-title">
+      <h2 class="section-title">
         ${createIcon('Lightbulb', 20).outerHTML}
         Chef's Tips
-      </h3>
+      </h2>
     `;
     
-    const tipsList = document.createElement('ul');
-    tipsList.className = 'tips-list';
+    const tipsContainer = document.createElement('div');
+    tipsContainer.className = 'tips-container';
     
-    recipe.tips.forEach(tip => {
-      const tipItem = document.createElement('li');
-      tipItem.className = 'tip-item';
-      tipItem.innerHTML = `<span class="tip-bullet"></span>${tip}`;
-      tipsList.appendChild(tipItem);
+    recipe.tips.forEach((tip, idx) => {
+      const tipCard = document.createElement('div');
+      tipCard.className = 'tip-card';
+      tipCard.innerHTML = `
+        <div class="tip-icon">${createIcon('Lightbulb', 16).outerHTML}</div>
+        <div class="tip-content">
+          <p class="tip-text">${tip}</p>
+        </div>
+      `;
+      tipsContainer.appendChild(tipCard);
     });
     
-    tipsSection.appendChild(tipsList);
+    tipsSection.appendChild(tipsContainer);
     content.appendChild(tipsSection);
   }
   
@@ -297,4 +352,63 @@ function addIngredientsToShoppingList(ingredients) {
     activeTab: 'shopping',
     selectedRecipe: null
   });
+}
+
+/**
+ * Show recipe share modal
+ */
+function showRecipeShareModal(recipe) {
+  const shareUrl = getRecipeShareUrl(recipe.id);
+  
+  // Create modal overlay
+  const modal = document.createElement('div');
+  modal.className = 'modal-overlay';
+  modal.innerHTML = `
+    <div class="modal-content share-modal">
+      <div class="modal-header">
+        <h2>Share Recipe</h2>
+        <button class="modal-close-btn">${createIcon('X', 24).outerHTML}</button>
+      </div>
+      <div class="modal-body">
+        <p class="share-title">${recipe.title}</p>
+        <div class="share-url-container">
+          <input type="text" class="share-url-input" value="${shareUrl}" readonly />
+          <button class="btn btn-primary copy-btn">
+            ${createIcon('Copy', 18).outerHTML}
+            <span>Copy</span>
+          </button>
+        </div>
+        <p class="share-hint">Share this link with friends to let them view this recipe!</p>
+      </div>
+    </div>
+  `;
+  
+  // Add event listeners
+  const closeBtn = modal.querySelector('.modal-close-btn');
+  closeBtn.onclick = () => document.body.removeChild(modal);
+  
+  const copyBtn = modal.querySelector('.copy-btn');
+  const urlInput = modal.querySelector('.share-url-input');
+  
+  copyBtn.onclick = async () => {
+    const success = await copyToClipboard(shareUrl);
+    if (success) {
+      copyBtn.innerHTML = `${createIcon('Check', 18).outerHTML} <span>Copied!</span>`;
+      copyBtn.classList.add('copied');
+      urlInput.select();
+      setTimeout(() => {
+        copyBtn.innerHTML = `${createIcon('Copy', 18).outerHTML} <span>Copy</span>`;
+        copyBtn.classList.remove('copied');
+      }, 2000);
+    }
+  };
+  
+  // Close on overlay click
+  modal.onclick = (e) => {
+    if (e.target === modal) {
+      document.body.removeChild(modal);
+    }
+  };
+  
+  document.body.appendChild(modal);
 }

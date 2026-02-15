@@ -2,6 +2,7 @@
 import { getState, setState } from '../state.js';
 import { scaleString } from '../utils/scaling.js';
 import { createIcon, createButton } from '../components/ui.js';
+import { filterRecipes, getAllUniqueTags, getActiveFilterCount, calculateTotalTime } from '../utils/filters.js';
 
 /**
  * Create recipe card element
@@ -14,13 +15,27 @@ function createRecipeCard(recipe, selectedCount, onToggleSelect, onUpdateCount) 
   const imageDiv = document.createElement('div');
   imageDiv.className = 'recipe-card-image';
   
+  // Top badges container
+  const topBadges = document.createElement('div');
+  topBadges.className = 'recipe-top-badges';
+  
   // Origin badge
   if (recipe.origin) {
     const originBadge = document.createElement('div');
     originBadge.className = 'recipe-badge-origin';
     originBadge.innerHTML = `${createIcon('Globe', 10).outerHTML} ${recipe.origin}`;
-    imageDiv.appendChild(originBadge);
+    topBadges.appendChild(originBadge);
   }
+  
+  // Difficulty badge
+  if (recipe.difficulty) {
+    const difficultyBadge = document.createElement('div');
+    difficultyBadge.className = `recipe-badge-difficulty difficulty-${recipe.difficulty.toLowerCase()}`;
+    difficultyBadge.textContent = recipe.difficulty;
+    topBadges.appendChild(difficultyBadge);
+  }
+  
+  imageDiv.appendChild(topBadges);
   
   // Count control (only if selected)
   if (selectedCount) {
@@ -35,16 +50,25 @@ function createRecipeCard(recipe, selectedCount, onToggleSelect, onUpdateCount) 
   selectBtn.onclick = (e) => onToggleSelect(e, recipe.id, recipe.servings);
   imageDiv.appendChild(selectBtn);
   
-  // Info overlay
+  // Info overlay with enhanced metadata
   const infoOverlay = document.createElement('div');
   infoOverlay.className = 'recipe-info-overlay';
+  
+  const timeInfo = [];
+  if (recipe.prepTime) timeInfo.push(`Prep: ${recipe.prepTime}`);
+  if (recipe.cookTime) timeInfo.push(`Cook: ${recipe.cookTime}`);
+  const timeText = timeInfo.length > 0 ? timeInfo.join(' • ') : 'Time: N/A';
+  
   infoOverlay.innerHTML = `
     <div class="recipe-info-badge">
-      ${createIcon('Clock', 12).outerHTML} ${recipe.cookTime}
+      ${createIcon('Clock', 12).outerHTML} ${timeText}
     </div>
     <div class="recipe-info-badge">
       ${createIcon('Users', 12).outerHTML} ${recipe.servings}
     </div>
+    ${recipe.cookingStyle ? `<div class="recipe-info-badge cooking-style-badge">
+      ${getCookingStyleIcon(recipe.cookingStyle)} ${recipe.cookingStyle}
+    </div>` : ''}
   `;
   imageDiv.appendChild(infoOverlay);
   
@@ -61,6 +85,20 @@ function createRecipeCard(recipe, selectedCount, onToggleSelect, onUpdateCount) 
       <span>${recipe.calories} kcal</span>
     </div>
   `;
+  
+  // Tags
+  if (recipe.tags && recipe.tags.length > 0) {
+    const tagsContainer = document.createElement('div');
+    tagsContainer.className = 'recipe-tags';
+    recipe.tags.slice(0, 3).forEach(tag => {
+      const tagChip = document.createElement('span');
+      tagChip.className = 'tag-chip';
+      tagChip.textContent = tag;
+      tagsContainer.appendChild(tagChip);
+    });
+    content.appendChild(tagsContainer);
+  }
+  
   card.appendChild(content);
   
   // Click to view recipe detail
@@ -73,6 +111,24 @@ function createRecipeCard(recipe, selectedCount, onToggleSelect, onUpdateCount) 
   };
   
   return card;
+}
+
+/**
+ * Get cooking style icon
+ */
+function getCookingStyleIcon(style) {
+  const iconMap = {
+    'One Pot': createIcon('ChefHat', 12).outerHTML,
+    'Traybake': createIcon('FileText', 12).outerHTML,
+    'Stovetop': createIcon('Flame', 12).outerHTML,
+    'Slow Cooker': createIcon('Clock', 12).outerHTML,
+    'No Cook': createIcon('Check', 12).outerHTML,
+    'Baking': createIcon('ChefHat', 12).outerHTML,
+    'Roasting': createIcon('Flame', 12).outerHTML,
+    'Grilling/BBQ': createIcon('Flame', 12).outerHTML,
+    'Steaming': createIcon('ChefHat', 12).outerHTML
+  };
+  return iconMap[style] || createIcon('ChefHat', 12).outerHTML;
 }
 
 /**
@@ -160,7 +216,7 @@ export function renderRecipesGrid() {
   `;
   container.appendChild(header);
   
-  // Search bar
+  // Search bar with filter button
   const searchContainer = document.createElement('div');
   searchContainer.className = 'search-container';
   const searchIcon = createIcon('Search', 20, 'search-icon');
@@ -169,22 +225,92 @@ export function renderRecipesGrid() {
   searchInput.type = 'text';
   searchInput.placeholder = 'Search recipes, ingredients...';
   searchInput.className = 'search-input';
+  searchInput.value = state.searchQuery || '';
+  searchInput.oninput = (e) => {
+    setState({ searchQuery: e.target.value });
+  };
   searchContainer.appendChild(searchInput);
+  
+  // Filter button
+  const filterBtn = document.createElement('button');
+  filterBtn.className = 'filter-btn';
+  filterBtn.innerHTML = createIcon('Filter', 20).outerHTML;
+  const activeCount = getActiveFilterCount(state.filters);
+  if (activeCount > 0) {
+    const badge = document.createElement('span');
+    badge.className = 'filter-badge';
+    badge.textContent = activeCount;
+    filterBtn.appendChild(badge);
+  }
+  filterBtn.onclick = () => setState({ showFilterPanel: !state.showFilterPanel });
+  searchContainer.appendChild(filterBtn);
+  
   container.appendChild(searchContainer);
+  
+  // Filter panel
+  if (state.showFilterPanel) {
+    const filterPanel = createFilterPanel();
+    container.appendChild(filterPanel);
+  }
+  
+  // Apply filters and search
+  let displayRecipes = [...state.recipes];
+  
+  // Apply filters
+  displayRecipes = filterRecipes(displayRecipes, state.filters);
+  
+  // Apply search
+  if (state.searchQuery && state.searchQuery.trim()) {
+    const query = state.searchQuery.toLowerCase().trim();
+    displayRecipes = displayRecipes.filter(recipe => {
+      return recipe.title.toLowerCase().includes(query) ||
+             recipe.description.toLowerCase().includes(query) ||
+             recipe.category.toLowerCase().includes(query) ||
+             recipe.ingredients.some(ing => ing.name.toLowerCase().includes(query)) ||
+             (recipe.tags && recipe.tags.some(tag => tag.toLowerCase().includes(query)));
+    });
+  }
   
   // Recipe cards container
   const cardsContainer = document.createElement('div');
   cardsContainer.className = 'recipe-cards-grid';
   
-  state.recipes.forEach(recipe => {
-    const card = createRecipeCard(
-      recipe,
-      state.selectedRecipes[recipe.id],
-      toggleRecipeSelection,
-      updateServingCount
-    );
-    cardsContainer.appendChild(card);
-  });
+  if (displayRecipes.length === 0) {
+    const noResults = document.createElement('div');
+    noResults.className = 'no-results';
+    noResults.innerHTML = `
+      <p>No recipes found matching your criteria.</p>
+    `;
+    const clearBtn = createButton({
+      text: 'Clear All Filters',
+      onClick: () => {
+        setState({
+          filters: {
+            difficulty: [],
+            cookingStyle: [],
+            tags: [],
+            timeRange: [0, 180],
+            calorieRange: [0, 1000],
+            categories: []
+          },
+          searchQuery: ''
+        });
+      },
+      variant: 'outline'
+    });
+    noResults.appendChild(clearBtn);
+    cardsContainer.appendChild(noResults);
+  } else {
+    displayRecipes.forEach(recipe => {
+      const card = createRecipeCard(
+        recipe,
+        state.selectedRecipes[recipe.id],
+        toggleRecipeSelection,
+        updateServingCount
+      );
+      cardsContainer.appendChild(card);
+    });
+  }
   
   container.appendChild(cardsContainer);
   
@@ -285,4 +411,202 @@ function addSelectedRecipesToShopping() {
     selectedRecipes: {},
     activeTab: 'shopping'
   });
+}
+
+/**
+ * Create filter panel
+ */
+function createFilterPanel() {
+  const state = getState();
+  const panel = document.createElement('div');
+  panel.className = 'filter-panel';
+  
+  // Panel header
+  const header = document.createElement('div');
+  header.className = 'filter-panel-header';
+  header.innerHTML = `
+    <h3>${createIcon('Sliders', 20).outerHTML} Filters</h3>
+    <button class="filter-clear-btn">Clear All</button>
+  `;
+  panel.appendChild(header);
+  
+  const clearBtn = header.querySelector('.filter-clear-btn');
+  clearBtn.onclick = () => {
+    setState({
+      filters: {
+        difficulty: [],
+        cookingStyle: [],
+        tags: [],
+        timeRange: [0, 180],
+        calorieRange: [0, 1000],
+        categories: []
+      }
+    });
+  };
+  
+  // Filter sections
+  const content = document.createElement('div');
+  content.className = 'filter-panel-content';
+  
+  // Difficulty filter
+  content.appendChild(createCheckboxFilter(
+    'Difficulty',
+    ['Easy', 'Medium', 'Hard'],
+    state.filters.difficulty,
+    (selected) => {
+      const newFilters = { ...state.filters, difficulty: selected };
+      setState({ filters: newFilters });
+    }
+  ));
+  
+  // Cooking Style filter
+  content.appendChild(createCheckboxFilter(
+    'Cooking Style',
+    ['One Pot', 'Traybake', 'Stovetop', 'Slow Cooker', 'No Cook', 'Baking', 'Roasting', 'Grilling/BBQ', 'Steaming'],
+    state.filters.cookingStyle,
+    (selected) => {
+      const newFilters = { ...state.filters, cookingStyle: selected };
+      setState({ filters: newFilters });
+    }
+  ));
+  
+  // Tags filter
+  const allTags = getAllUniqueTags(state.recipes);
+  content.appendChild(createCheckboxFilter(
+    'Tags',
+    allTags,
+    state.filters.tags,
+    (selected) => {
+      const newFilters = { ...state.filters, tags: selected };
+      setState({ filters: newFilters });
+    }
+  ));
+  
+  // Category filter
+  const categories = ['Breakfast', 'Brunch', 'Lunch', 'Dinner', 'Appetizer', 'Side', 'Snack', 'Dessert', 'Drink', 'Spice Mix', 'Sauce/Dip', 'Soup/Stew', 'Salad', 'Baking'];
+  content.appendChild(createCheckboxFilter(
+    'Category',
+    categories,
+    state.filters.categories,
+    (selected) => {
+      const newFilters = { ...state.filters, categories: selected };
+      setState({ filters: newFilters });
+    }
+  ));
+  
+  // Time range filter
+  content.appendChild(createRangeFilter(
+    'Total Time (minutes)',
+    0,
+    180,
+    state.filters.timeRange,
+    (range) => {
+      const newFilters = { ...state.filters, timeRange: range };
+      setState({ filters: newFilters });
+    }
+  ));
+  
+  // Calorie range filter
+  content.appendChild(createRangeFilter(
+    'Calories',
+    0,
+    1000,
+    state.filters.calorieRange,
+    (range) => {
+      const newFilters = { ...state.filters, calorieRange: range };
+      setState({ filters: newFilters });
+    }
+  ));
+  
+  panel.appendChild(content);
+  
+  return panel;
+}
+
+/**
+ * Create checkbox filter section
+ */
+function createCheckboxFilter(title, options, selectedOptions, onChange) {
+  const section = document.createElement('div');
+  section.className = 'filter-section';
+  
+  const titleEl = document.createElement('h4');
+  titleEl.className = 'filter-section-title';
+  titleEl.textContent = title;
+  section.appendChild(titleEl);
+  
+  const optionsContainer = document.createElement('div');
+  optionsContainer.className = 'filter-options';
+  
+  options.forEach(option => {
+    const label = document.createElement('label');
+    label.className = 'filter-checkbox-label';
+    
+    const checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+    checkbox.checked = selectedOptions.includes(option);
+    checkbox.onchange = (e) => {
+      let newSelected = [...selectedOptions];
+      if (e.target.checked) {
+        newSelected.push(option);
+      } else {
+        newSelected = newSelected.filter(item => item !== option);
+      }
+      onChange(newSelected);
+    };
+    
+    label.appendChild(checkbox);
+    label.appendChild(document.createTextNode(option));
+    optionsContainer.appendChild(label);
+  });
+  
+  section.appendChild(optionsContainer);
+  return section;
+}
+
+/**
+ * Create range filter section
+ */
+function createRangeFilter(title, min, max, currentRange, onChange) {
+  const section = document.createElement('div');
+  section.className = 'filter-section';
+  
+  const titleEl = document.createElement('h4');
+  titleEl.className = 'filter-section-title';
+  titleEl.textContent = `${title}: ${currentRange[0]} - ${currentRange[1]}`;
+  section.appendChild(titleEl);
+  
+  const rangeContainer = document.createElement('div');
+  rangeContainer.className = 'filter-range-container';
+  
+  // Min slider
+  const minInput = document.createElement('input');
+  minInput.type = 'range';
+  minInput.min = min;
+  minInput.max = max;
+  minInput.value = currentRange[0];
+  minInput.className = 'filter-range-input';
+  minInput.oninput = (e) => {
+    const newMin = parseInt(e.target.value);
+    const newMax = Math.max(newMin, currentRange[1]);
+    onChange([newMin, newMax]);
+  };
+  rangeContainer.appendChild(minInput);
+  
+  // Max slider
+  const maxInput = document.createElement('input');
+  maxInput.type = 'range';
+  maxInput.min = min;
+  maxInput.max = max;
+  maxInput.value = currentRange[1];
+  maxInput.className = 'filter-range-input';
+  maxInput.oninput = (e) => {
+    const newMax = parseInt(e.target.value);
+    const newMin = Math.min(currentRange[0], newMax);
+    onChange([newMin, newMax]);
+  };
+  rangeContainer.appendChild(maxInput);
+  
+  section.appendChild(rangeContainer);
+  return section;
 }
