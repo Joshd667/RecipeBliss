@@ -1075,6 +1075,33 @@ body {
   margin-right: 0.5rem;
 }
 
+/* Delete All Button */
+.delete-all-btn {
+  position: fixed;
+  bottom: 6rem;
+  left: 1.5rem;
+  background: var(--color-red-600);
+  color: white;
+  border: 1px solid var(--color-red-600);
+  box-shadow: var(--shadow-lg);
+  padding: 0.75rem 1rem;
+  border-radius: 9999px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: background 0.2s;
+  animation: zoomIn 0.3s ease-out;
+}
+
+.delete-all-btn:hover {
+  background: var(--color-red-500);
+}
+
+.delete-all-btn svg {
+  margin-right: 0.5rem;
+}
+
 /* Empty State */
 .empty-state {
   display: flex;
