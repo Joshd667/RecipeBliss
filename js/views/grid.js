@@ -15,6 +15,13 @@ function createRecipeCard(recipe, selectedCount, onToggleSelect, onUpdateCount) 
   const imageDiv = document.createElement('div');
   imageDiv.className = 'recipe-card-image';
   
+  // Set background image if recipe.image is provided
+  if (recipe.image) {
+    imageDiv.style.backgroundImage = `url('${recipe.image}')`;
+    imageDiv.style.backgroundSize = 'cover';
+    imageDiv.style.backgroundPosition = 'center';
+  }
+  
   // Top badges container
   const topBadges = document.createElement('div');
   topBadges.className = 'recipe-top-badges';
@@ -47,7 +54,10 @@ function createRecipeCard(recipe, selectedCount, onToggleSelect, onUpdateCount) 
   const selectBtn = document.createElement('button');
   selectBtn.className = `recipe-select-btn ${selectedCount ? 'selected' : ''}`;
   selectBtn.innerHTML = selectedCount ? createIcon('Check', 16).outerHTML : createIcon('Plus', 16).outerHTML;
-  selectBtn.onclick = (e) => onToggleSelect(e, recipe.id, recipe.servings);
+  selectBtn.onclick = (e) => {
+    e.stopPropagation(); // Prevent card click event
+    onToggleSelect(e, recipe.id, recipe.servings);
+  };
   imageDiv.appendChild(selectBtn);
   
   // Info overlay with enhanced metadata
@@ -172,12 +182,31 @@ function createCountControl(count, recipeId, onUpdateCount) {
 }
 
 /**
- * Create header toggle (metric/US switcher)
+ * Create header toggle (metric/US switcher and dark mode)
  */
 export function createHeaderToggle() {
   const state = getState();
   const container = document.createElement('div');
   container.className = 'header-toggle';
+  
+  // Dark mode toggle
+  const darkModeBtn = document.createElement('button');
+  darkModeBtn.className = 'dark-mode-toggle';
+  darkModeBtn.innerHTML = createIcon('Sun', 20).outerHTML;
+  darkModeBtn.setAttribute('aria-label', 'Toggle dark mode');
+  darkModeBtn.onclick = () => {
+    const isDark = document.body.classList.toggle('dark-mode');
+    darkModeBtn.innerHTML = isDark ? createIcon('Moon', 20).outerHTML : createIcon('Sun', 20).outerHTML;
+    localStorage.setItem('darkMode', isDark ? 'true' : 'false');
+  };
+  
+  // Check saved dark mode preference
+  if (localStorage.getItem('darkMode') === 'true') {
+    document.body.classList.add('dark-mode');
+    darkModeBtn.innerHTML = createIcon('Moon', 20).outerHTML;
+  }
+  
+  container.appendChild(darkModeBtn);
   
   // Metric toggle
   const toggle = document.createElement('div');
@@ -426,19 +455,29 @@ function addSelectedRecipesToShopping() {
  */
 function createFilterPanel() {
   const state = getState();
+  
+  // Create modal backdrop
+  const backdrop = document.createElement('div');
+  backdrop.className = 'filter-modal-backdrop';
+  backdrop.onclick = () => setState({ showFilterPanel: false });
+  
   const panel = document.createElement('div');
   panel.className = 'filter-panel';
+  panel.onclick = (e) => e.stopPropagation(); // Prevent closing when clicking inside panel
   
   // Panel header
   const header = document.createElement('div');
   header.className = 'filter-panel-header';
-  header.innerHTML = `
-    <h3>${createIcon('Sliders', 20).outerHTML} Filters</h3>
-    <button class="filter-clear-btn">Clear All</button>
-  `;
-  panel.appendChild(header);
   
-  const clearBtn = header.querySelector('.filter-clear-btn');
+  const headerLeft = document.createElement('div');
+  headerLeft.innerHTML = `<h3>${createIcon('Sliders', 20).outerHTML} Filters</h3>`;
+  
+  const headerRight = document.createElement('div');
+  headerRight.className = 'filter-panel-header-actions';
+  
+  const clearBtn = document.createElement('button');
+  clearBtn.className = 'filter-clear-btn';
+  clearBtn.textContent = 'Clear All';
   clearBtn.onclick = () => {
     setState({
       filters: {
@@ -451,6 +490,19 @@ function createFilterPanel() {
       }
     });
   };
+  
+  const closeBtn = document.createElement('button');
+  closeBtn.className = 'filter-close-btn';
+  closeBtn.innerHTML = createIcon('X', 20).outerHTML;
+  closeBtn.setAttribute('aria-label', 'Close filters');
+  closeBtn.onclick = () => setState({ showFilterPanel: false });
+  
+  headerRight.appendChild(clearBtn);
+  headerRight.appendChild(closeBtn);
+  
+  header.appendChild(headerLeft);
+  header.appendChild(headerRight);
+  panel.appendChild(header);
   
   // Filter sections
   const content = document.createElement('div');
@@ -528,7 +580,9 @@ function createFilterPanel() {
   
   panel.appendChild(content);
   
-  return panel;
+  backdrop.appendChild(panel);
+  
+  return backdrop;
 }
 
 /**
