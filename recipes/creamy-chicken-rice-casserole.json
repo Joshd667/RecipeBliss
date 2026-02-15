@@ -4,10 +4,13 @@
   "origin": "USA / UK 🇺🇸🇬🇧",
   "description": "A refined take on the classic one-pot comfort meal. Juicy chicken thighs, aromatic rice, and tender veggies baked in a rich cream sauce, finished with a savoury stuffing crumble.",
   "image": "images/recipes/creamy-chicken-rice-casserole.jpg",
+  "difficulty": "Easy",
+  "cookingStyle": "One Pot",
   "prepTime": "10 min",
   "cookTime": "50 min",
   "servings": 4,
   "category": "Dinner",
+  "tags": ["Chicken", "Rice", "Savory"],
   "calories": 650,
   "ingredients": [
     { "name": "Chicken Thighs (boneless)", "amount": "1.5 lbs", "amountMetric": "700g", "category": "Meat", "aisle": "12" },
