@@ -45,7 +45,7 @@ export function decodeBasket(encodedString) {
     
     // Expand minimal representation back to full format
     const items = data.items.map((item, index) => ({
-      id: Date.now() + Math.random() + index,
+      id: `${Date.now()}-${Math.random().toString(36).substr(2, 9)}-${index}`,
       name: item.n,
       amount: item.a,
       amountMetric: item.a,

@@ -18,7 +18,7 @@ export function getAllUniqueTags(recipes) {
 /**
  * Calculate total time in minutes from recipe
  * @param {Object} recipe - Recipe object with prepTime and cookTime
- * @returns {number} - Total time in minutes
+ * @returns {number} - Total time in minutes, or null if no time data available
  */
 export function calculateTotalTime(recipe) {
   const parseTime = (timeStr) => {
@@ -29,7 +29,10 @@ export function calculateTotalTime(recipe) {
   
   const prepMins = parseTime(recipe.prepTime);
   const cookMins = parseTime(recipe.cookTime);
-  return prepMins + cookMins;
+  const total = prepMins + cookMins;
+  
+  // Return null if no time data available
+  return total > 0 ? total : null;
 }
 
 /**
@@ -61,10 +64,10 @@ export function filterRecipes(recipes, filters) {
       }
     }
     
-    // Time range filter
+    // Time range filter (skip recipes without time data)
     if (filters.timeRange) {
       const totalTime = calculateTotalTime(recipe);
-      if (totalTime < filters.timeRange[0] || totalTime > filters.timeRange[1]) {
+      if (totalTime !== null && (totalTime < filters.timeRange[0] || totalTime > filters.timeRange[1])) {
         return false;
       }
     }

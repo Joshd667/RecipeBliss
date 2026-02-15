@@ -168,7 +168,7 @@ function showBasketShareModal() {
   const encodedBasket = encodeBasket(state.shoppingList, state.selectedRecipes, state.useMetric);
   
   if (!encodedBasket) {
-    alert('Failed to encode shopping list. Please try again.');
+    alert('Failed to encode shopping list. This may be due to serialization issues with your basket data. Please try removing some items and try again.');
     return;
   }
   

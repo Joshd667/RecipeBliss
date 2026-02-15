@@ -57,7 +57,7 @@ function createRecipeCard(recipe, selectedCount, onToggleSelect, onUpdateCount) 
   const timeInfo = [];
   if (recipe.prepTime) timeInfo.push(`Prep: ${recipe.prepTime}`);
   if (recipe.cookTime) timeInfo.push(`Cook: ${recipe.cookTime}`);
-  const timeText = timeInfo.length > 0 ? timeInfo.join(' • ') : (recipe.cookTime || 'N/A');
+  const timeText = timeInfo.length > 0 ? timeInfo.join(' • ') : 'Time: N/A';
   
   infoOverlay.innerHTML = `
     <div class="recipe-info-badge">
@@ -276,12 +276,30 @@ export function renderRecipesGrid() {
   cardsContainer.className = 'recipe-cards-grid';
   
   if (displayRecipes.length === 0) {
-    cardsContainer.innerHTML = `
-      <div class="no-results">
-        <p>No recipes found matching your criteria.</p>
-        <button class="btn btn-outline" onclick="window.location.reload()">Clear All Filters</button>
-      </div>
+    const noResults = document.createElement('div');
+    noResults.className = 'no-results';
+    noResults.innerHTML = `
+      <p>No recipes found matching your criteria.</p>
     `;
+    const clearBtn = createButton({
+      text: 'Clear All Filters',
+      onClick: () => {
+        setState({
+          filters: {
+            difficulty: [],
+            cookingStyle: [],
+            tags: [],
+            timeRange: [0, 180],
+            calorieRange: [0, 1000],
+            categories: []
+          },
+          searchQuery: ''
+        });
+      },
+      variant: 'outline'
+    });
+    noResults.appendChild(clearBtn);
+    cardsContainer.appendChild(noResults);
   } else {
     displayRecipes.forEach(recipe => {
       const card = createRecipeCard(
