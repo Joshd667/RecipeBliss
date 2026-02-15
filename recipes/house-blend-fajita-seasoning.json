@@ -4,10 +4,13 @@
   "origin": "Tex-Mex 🇲🇽🇺🇸",
   "description": "A robust, smoky spice blend. Far superior to store-bought packets and free from preservatives. Make a batch and store it.",
   "image": "images/recipes/house-blend-fajita-seasoning.jpg",
+  "difficulty": "Easy",
+  "cookingStyle": "No Cook",
   "prepTime": "5 min",
   "cookTime": "0 min",
   "servings": 12,
   "category": "Spice Mix",
+  "tags": ["Spicy", "Vegan", "Gluten Free"],
   "calories": 10,
   "ingredients": [
     { "name": "Smoked Paprika", "amount": "1 tbsp", "amountMetric": "1 tbsp", "category": "Pantry", "aisle": "5" },
