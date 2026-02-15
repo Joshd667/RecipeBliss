@@ -1,0 +1,37 @@
+{
+  "id": 3,
+  "title": "Vegetarian Pastel Azteca (Tortilla Pie)",
+  "origin": "Mexico 🇲🇽",
+  "description": "A Mexican Lasagna baked in a round pot. Layers of soft tortillas, creamy refried beans, and a saucy roasted veggie filling, all crowned with melted cheese.",
+  "image": "images/recipes/vegetarian-pastel-azteca.jpg",
+  "prepTime": "15 min",
+  "cookTime": "30 min",
+  "servings": 4,
+  "category": "Dinner",
+  "calories": 450,
+  "ingredients": [
+    { "name": "Large Soft Flour Tortillas", "amount": "5", "amountMetric": "5", "category": "Bakery", "aisle": "9" },
+    { "name": "Cheddar/Mozzarella Mix", "amount": "7 oz", "amountMetric": "200g", "category": "Dairy", "aisle": "10" },
+    { "name": "Mixed Bell Peppers", "amount": "3", "amountMetric": "3", "category": "Produce", "aisle": "1" },
+    { "name": "Red Onions", "amount": "2", "amountMetric": "2", "category": "Produce", "aisle": "1" },
+    { "name": "Courgette (Zucchini)", "amount": "1 large", "amountMetric": "1 large", "category": "Produce", "aisle": "1" },
+    { "name": "Black Beans (tinned)", "amount": "14 oz can", "amountMetric": "400g can", "category": "Pantry", "aisle": "3" },
+    { "name": "Refried Beans", "amount": "14 oz can", "amountMetric": "400g can", "category": "Pantry", "aisle": "3" },
+    { "name": "Passata (Sieved Tomatoes)", "amount": "17 oz carton", "amountMetric": "500g carton", "category": "Pantry", "aisle": "3" },
+    { "name": "House Blend Fajita Seasoning", "amount": "2 tbsp", "amountMetric": "2 tbsp", "category": "Pantry", "aisle": "5" }
+  ],
+  "steps": [
+    "Preheat oven to 350°F (180°C). Grease your round Dutch oven or baking dish.",
+    "Slice Peppers and Onions. Grate the Courgette. Sauté peppers/onions in a pan for 5 mins until soft.",
+    "Add Grated Courgette, drained Black Beans, Passata, and Fajita Seasoning to the pan. Simmer for 5 mins into a thick stew.",
+    "ASSEMBLY: Place a Tortilla in the pot. Spread with a thin layer of Refried Beans. Ladle over 1/4 of the Veggie Stew. Sprinkle cheese.",
+    "Repeat layers 3 times. Place final Tortilla on top.",
+    "Spread remaining Refried Beans on the TOP tortilla (to prevent burning) and cover with remaining Cheese.",
+    "Bake for 25 mins until bubbling and golden. Let stand for 5 mins before slicing."
+  ],
+  "tips": [
+    "Moisture Control: We grate courgette into the sauce because as it cooks, it releases water, ensuring the stack stays moist from the inside out.",
+    "The 'Glue': Refried beans are essential here. They act as a barrier to stop the sauce soaking into the tortilla too quickly, keeping the layers distinct.",
+    "The Gravy: We simmer the veg in passata first to soften the tortillas gently, rather than just using dry fried vegetables which would result in a chewy texture."
+  ]
+}

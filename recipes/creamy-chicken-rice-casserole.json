@@ -1,0 +1,40 @@
+{
+  "id": 1,
+  "title": "Creamy Chicken & Rice Casserole with Herbed Crust",
+  "origin": "USA / UK 🇺🇸🇬🇧",
+  "description": "A refined take on the classic one-pot comfort meal. Juicy chicken thighs, aromatic rice, and tender veggies baked in a rich cream sauce, finished with a savoury stuffing crumble.",
+  "image": "images/recipes/creamy-chicken-rice-casserole.jpg",
+  "prepTime": "10 min",
+  "cookTime": "50 min",
+  "servings": 4,
+  "category": "Dinner",
+  "calories": 650,
+  "ingredients": [
+    { "name": "Chicken Thighs (boneless)", "amount": "1.5 lbs", "amountMetric": "700g", "category": "Meat", "aisle": "12" },
+    { "name": "Long Grain Rice", "amount": "1.5 cups", "amountMetric": "1.5 cups", "category": "Pantry", "aisle": "4" },
+    { "name": "Cream of Chicken Soup", "amount": "10.5 oz can", "amountMetric": "300g can", "category": "Pantry", "aisle": "2" },
+    { "name": "Chicken Stock", "amount": "2 cups", "amountMetric": "475ml", "category": "Pantry", "aisle": "2" },
+    { "name": "Sour Cream", "amount": "1/2 cup", "amountMetric": "1/2 cup", "category": "Dairy", "aisle": "10" },
+    { "name": "Onion", "amount": "1 large", "amountMetric": "1 large", "category": "Produce", "aisle": "1" },
+    { "name": "Broccoli", "amount": "1 head", "amountMetric": "1 head", "category": "Produce", "aisle": "1" },
+    { "name": "Mushrooms", "amount": "8 oz", "amountMetric": "225g", "category": "Produce", "aisle": "1" },
+    { "name": "Sweetcorn (canned)", "amount": "1 cup", "amountMetric": "1 cup", "category": "Pantry", "aisle": "3" },
+    { "name": "Stuffing Mix", "amount": "1 cup", "amountMetric": "1 cup", "category": "Pantry", "aisle": "4" },
+    { "name": "Cheddar Cheese", "amount": "1 cup", "amountMetric": "1 cup", "category": "Dairy", "aisle": "10" },
+    { "name": "Butter", "amount": "2 tbsp", "amountMetric": "2 tbsp", "category": "Dairy", "aisle": "10" }
+  ],
+  "steps": [
+    "Preheat oven to 375°F (190°C). Grease a 9x13 baking dish.",
+    "In a bowl, whisk together Condensed Soup, Sour Cream, and Hot Stock until smooth.",
+    "Stir in Uncooked Rice, Diced Onion, Sliced Mushrooms, Sweetcorn, and Chicken chunks. Pour into baking dish.",
+    "Tuck Broccoli florets into the mixture so they are mostly submerged. Cover tightly with foil.",
+    "Bake for 35 minutes.",
+    "Mix Crushed Stuffing, Grated Cheese, and Melted Butter.",
+    "Remove foil. Sprinkle topping over the casserole. Bake uncovered for 15 minutes until golden."
+  ],
+  "tips": [
+    "Why Thighs? We use thighs because they withstand the long bake time without drying out, keeping the dish juicy.",
+    "The Sauce: Sour cream is used instead of mayonnaise as it provides stability and tang without separating in the oven heat.",
+    "The Steam: The foil must be sealed tightly! This traps the steam which is essential to cook the rice perfectly."
+  ]
+}

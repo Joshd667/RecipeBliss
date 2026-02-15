@@ -1,0 +1,31 @@
+{
+  "id": 9,
+  "title": "Perfect Fluffy Rice (Master Method)",
+  "origin": "Global 🌎",
+  "description": "The fail-safe absorption technique for Basmati or Long Grain. Rinsing and steaming are the secrets to perfectly separated grains without a rice cooker.",
+  "image": "images/recipes/perfect-fluffy-rice.jpg",
+  "prepTime": "5 min",
+  "cookTime": "25 min",
+  "servings": 4,
+  "category": "Side",
+  "calories": 200,
+  "ingredients": [
+    { "name": "Basmati OR Long Grain Rice", "amount": "1.5 cups", "amountMetric": "300g", "category": "Pantry", "aisle": "4" },
+    { "name": "Water (Boiling)", "amount": "2.25 cups", "amountMetric": "540ml", "category": "Pantry", "aisle": "0" },
+    { "name": "Salt", "amount": "1/2 tsp", "amountMetric": "1/2 tsp", "category": "Pantry", "aisle": "5" },
+    { "name": "Butter (Optional)", "amount": "1 tsp", "amountMetric": "1 tsp", "category": "Dairy", "aisle": "10" }
+  ],
+  "steps": [
+    "THE RINSE (CRUCIAL): Place rice in a sieve. Wash under cold tap until the water runs CLEAR. This removes starch that causes gluey rice.",
+    "Place rinsed rice, Boiling Water, Salt, and Butter in a pot with a tight-fitting lid.",
+    "Bring to a boil (this should be fast).",
+    "LID ON. Turn heat to LOWEST possible setting. Cook for 12 minutes. NO PEEKING!",
+    "Turn heat OFF. Leave the pot on the burner (if gas) or move to a warm spot (if electric). Let STEAM for 10 minutes. Do not remove lid.",
+    "Remove lid. Fluff gently with a fork. Serve immediately."
+  ],
+  "tips": [
+    "Ratio Rule: For Basmati, use 1 cup rice to 1.5 cups water. For American Long Grain, use 1 cup rice to 1.75 cups water. The recipe above uses the Basmati ratio.",
+    "The Steam: The 10-minute steam with the heat off is what finishes the cooking gently. If you skip this, the rice may be wet at the bottom.",
+    "No Peeking: Lifting the lid lets the steam escape and ruins the cooking process. Trust the timer!"
+  ]
+}

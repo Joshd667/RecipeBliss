@@ -1,0 +1,32 @@
+{
+  "id": 5,
+  "title": "House Blend Fajita Seasoning",
+  "origin": "Tex-Mex 🇲🇽🇺🇸",
+  "description": "A robust, smoky spice blend. Far superior to store-bought packets and free from preservatives. Make a batch and store it.",
+  "image": "images/recipes/house-blend-fajita-seasoning.jpg",
+  "prepTime": "5 min",
+  "cookTime": "0 min",
+  "servings": 12,
+  "category": "Spice Mix",
+  "calories": 10,
+  "ingredients": [
+    { "name": "Smoked Paprika", "amount": "1 tbsp", "amountMetric": "1 tbsp", "category": "Pantry", "aisle": "5" },
+    { "name": "Ground Cumin", "amount": "1 tsp", "amountMetric": "1 tsp", "category": "Pantry", "aisle": "5" },
+    { "name": "Garlic Powder", "amount": "1 tsp", "amountMetric": "1 tsp", "category": "Pantry", "aisle": "5" },
+    { "name": "Onion Powder", "amount": "1 tsp", "amountMetric": "1 tsp", "category": "Pantry", "aisle": "5" },
+    { "name": "Dried Oregano", "amount": "1 tsp", "amountMetric": "1 tsp", "category": "Pantry", "aisle": "5" },
+    { "name": "Chilli Powder (Medium)", "amount": "1/2 tsp", "amountMetric": "1/2 tsp", "category": "Pantry", "aisle": "5" },
+    { "name": "Salt", "amount": "1 tsp", "amountMetric": "1 tsp", "category": "Pantry", "aisle": "5" },
+    { "name": "Sugar", "amount": "1 pinch", "amountMetric": "1 pinch", "category": "Pantry", "aisle": "4" }
+  ],
+  "steps": [
+    "Measure all spices into a small jar or bowl.",
+    "Shake or whisk vigorously to combine.",
+    "Store in an airtight container.",
+    "Usage: Use 2 tbsp of this mix for the Vegetarian Pastel Azteca."
+  ],
+  "tips": [
+    "Control: Making your own mix allows you to control the salt content, which is often very high in pre-mixed packets.",
+    "Freshness: Spices release oil when mixed. This blend will taste significantly more potent than a packet that has been sitting on a shelf for months."
+  ]
+}

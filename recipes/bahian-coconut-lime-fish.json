@@ -1,0 +1,40 @@
+{
+  "id": 8,
+  "title": "Bahian Coconut & Lime Fish Bake (Moqueca)",
+  "origin": "Brazil 🇧🇷",
+  "description": "A vibrant, golden seafood stew. Mild white fish is 'cured' in lime to remove any fishiness, then baked in a creamy, aromatic coconut and turmeric sauce.",
+  "image": "images/recipes/bahian-coconut-lime-fish.jpg",
+  "prepTime": "10 min",
+  "cookTime": "25 min",
+  "servings": 4,
+  "category": "Dinner",
+  "calories": 420,
+  "ingredients": [
+    { "name": "Cod or Haddock Loins", "amount": "4 (thick)", "amountMetric": "4 (600g)", "category": "Seafood", "aisle": "12" },
+    { "name": "Limes (Juice of)", "amount": "2", "amountMetric": "2", "category": "Produce", "aisle": "1" },
+    { "name": "Coconut Milk (Full Fat)", "amount": "1 can", "amountMetric": "400ml can", "category": "Pantry", "aisle": "3" },
+    { "name": "Red Pepper", "amount": "1", "amountMetric": "1", "category": "Produce", "aisle": "1" },
+    { "name": "Yellow Pepper", "amount": "1", "amountMetric": "1", "category": "Produce", "aisle": "1" },
+    { "name": "Large Onion", "amount": "1", "amountMetric": "1", "category": "Produce", "aisle": "1" },
+    { "name": "Tomatoes", "amount": "2", "amountMetric": "2", "category": "Produce", "aisle": "1" },
+    { "name": "Garlic Cloves", "amount": "2", "amountMetric": "2", "category": "Produce", "aisle": "1" },
+    { "name": "Ground Turmeric", "amount": "1 tsp", "amountMetric": "1 tsp", "category": "Pantry", "aisle": "5" },
+    { "name": "Sweet Paprika", "amount": "1 tsp", "amountMetric": "1 tsp", "category": "Pantry", "aisle": "5" },
+    { "name": "Fresh Coriander", "amount": "1 bunch", "amountMetric": "1 bunch", "category": "Produce", "aisle": "1" },
+    { "name": "Sea Salt", "amount": "1 tsp", "amountMetric": "1 tsp", "category": "Pantry", "aisle": "5" }
+  ],
+  "steps": [
+    "THE CURE: Place fish loins in a bowl. Rub with Lime Juice, Crushed Garlic, and Salt. Let sit for 10 mins while you chop veg.",
+    "Preheat oven to 200°C (180°C Fan) / 400°F.",
+    "Slice Onions and Peppers into rings. Slice Tomatoes into rounds. Layer them in the bottom of a deep baking dish.",
+    "Place the marinated fish loins on top of the veg. Pour any leftover lime juice over them.",
+    "THE GOLDEN SAUCE: Whisk Coconut Milk, Turmeric, and Paprika in a jug. Pour over the fish and veg.",
+    "Bake UNCOVERED for 20-25 minutes until the sauce bubbles and fish flakes easily.",
+    "Top with a huge handful of chopped Coriander. Serve with white rice."
+  ],
+  "tips": [
+    "Fish Alternatives: If you want to splash out, Monkfish is excellent as it holds its shape perfectly. For a special treat, add King Prawns for the last 10 minutes of cooking.",
+    "The Lime Cure: Don't skip the marinating step! The acid in the lime starts to 'cook' the fish (like ceviche) and neutralizes the amines that cause 'fishy' smells, leaving just a fresh, clean taste.",
+    "Coconut Milk: Use full-fat coconut milk. Light versions will split in the oven and won't give you that luxurious, creamy sauce texture."
+  ]
+}
