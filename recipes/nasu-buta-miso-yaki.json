@@ -4,10 +4,13 @@
   "origin": "Japan 🇯🇵",
   "description": "An authentic, easy-to-cook traybake. Pork shoulder steaks and aubergine chunks roasted in a sweet, savory miso glaze until sticky and tender.",
   "image": "images/recipes/nasu-buta-miso-yaki.jpg",
+  "difficulty": "Easy",
+  "cookingStyle": "Traybake",
   "prepTime": "10 min",
   "cookTime": "30 min",
   "servings": 4,
   "category": "Dinner",
+  "tags": ["Pork", "Savory", "Dairy Free"],
   "calories": 520,
   "ingredients": [
     { "name": "Pork Shoulder Steaks", "amount": "4", "amountMetric": "4 (600g)", "category": "Meat", "aisle": "12" },
