@@ -172,9 +172,9 @@ export function renderRecipesGrid() {
   searchContainer.appendChild(searchInput);
   container.appendChild(searchContainer);
   
-  // Recipe grid
-  const grid = document.createElement('div');
-  grid.className = 'recipe-grid';
+  // Recipe cards container
+  const cardsContainer = document.createElement('div');
+  cardsContainer.className = 'recipe-cards-grid';
   
   state.recipes.forEach(recipe => {
     const card = createRecipeCard(
@@ -183,10 +183,10 @@ export function renderRecipesGrid() {
       toggleRecipeSelection,
       updateServingCount
     );
-    grid.appendChild(card);
+    cardsContainer.appendChild(card);
   });
   
-  container.appendChild(grid);
+  container.appendChild(cardsContainer);
   
   // Selection banner
   const selectedCount = Object.keys(state.selectedRecipes).length;
