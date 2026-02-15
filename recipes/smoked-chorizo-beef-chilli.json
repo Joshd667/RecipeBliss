@@ -1,0 +1,42 @@
+{
+  "id": 2,
+  "title": "Smoked Chorizo & Beef Chilli con Carne",
+  "origin": "Tex-Mex 🇲🇽🇺🇸",
+  "description": "A complex, thick stovetop ragu. The smoky paprika from the chorizo permeates the beef, while a secret addition adds a glossy richness found in top restaurants.",
+  "image": "images/recipes/smoked-chorizo-beef-chilli.jpg",
+  "prepTime": "15 min",
+  "cookTime": "60 min",
+  "servings": 6,
+  "category": "Dinner",
+  "calories": 580,
+  "ingredients": [
+    { "name": "Beef Mince (Lean)", "amount": "1 lb", "amountMetric": "500g", "category": "Meat", "aisle": "12" },
+    { "name": "Cooking Chorizo (Ring)", "amount": "8 oz", "amountMetric": "225g", "category": "Meat", "aisle": "12" },
+    { "name": "Onions", "amount": "2", "amountMetric": "2", "category": "Produce", "aisle": "1" },
+    { "name": "Red Peppers", "amount": "2", "amountMetric": "2", "category": "Produce", "aisle": "1" },
+    { "name": "Garlic Cloves", "amount": "3", "amountMetric": "3", "category": "Produce", "aisle": "1" },
+    { "name": "Tomato Puree", "amount": "2 tbsp", "amountMetric": "2 tbsp", "category": "Pantry", "aisle": "3" },
+    { "name": "Chopped Tomatoes", "amount": "14 oz can", "amountMetric": "400g can", "category": "Pantry", "aisle": "3" },
+    { "name": "Kidney Beans", "amount": "14 oz can", "amountMetric": "400g can", "category": "Pantry", "aisle": "3" },
+    { "name": "Beef Stock", "amount": "1.5 cups", "amountMetric": "300ml", "category": "Pantry", "aisle": "2" },
+    { "name": "Dark Chocolate (70%)", "amount": "1 square", "amountMetric": "1 square", "category": "Pantry", "aisle": "4" },
+    { "name": "Smoked Paprika", "amount": "2 tsp", "amountMetric": "2 tsp", "category": "Pantry", "aisle": "5" },
+    { "name": "Ground Cumin", "amount": "2 tsp", "amountMetric": "2 tsp", "category": "Pantry", "aisle": "5" },
+    { "name": "Mild Chilli Powder", "amount": "1 tsp", "amountMetric": "1 tsp", "category": "Pantry", "aisle": "5" },
+    { "name": "Dried Oregano", "amount": "1 tsp", "amountMetric": "1 tsp", "category": "Pantry", "aisle": "5" }
+  ],
+  "steps": [
+    "Dice the Chorizo (peel off skin if tough). In a large pot over medium heat, fry Chorizo until crispy and oil is released. Remove meat, leave oil.",
+    "Fry diced Onions and Peppers in the chorizo oil for 8 mins until soft. Add crushed Garlic for 1 min.",
+    "Turn heat up. Add Beef Mince. Break up and fry until browned.",
+    "Stir in Tomato Puree, Paprika, Cumin, Chilli Powder, Oregano. Cook for 2 mins to toast spices.",
+    "Add Chopped Tomatoes, Beef Stock, drained Kidney Beans, and the crispy Chorizo back to the pot.",
+    "Bring to boil, then simmer UNCOVERED for 45 mins. The sauce should reduce and become thick.",
+    "Turn off heat. Stir in the Dark Chocolate until melted. Season with salt/pepper."
+  ],
+  "tips": [
+    "The Secret Ingredient: Dark chocolate doesn't make it a dessert. It adds a deep, glossy finish and a richness that enhances the savoury beef.",
+    "Texture: We cook this with the lid OFF to allow evaporation. This concentrates the flavor and creates a thick ragu that clings to food.",
+    "Flavor Balance: Red peppers are used instead of green to add a natural sweetness that balances the acidity of the tomatoes and the heat of the spice."
+  ]
+}

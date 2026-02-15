@@ -1,0 +1,39 @@
+{
+  "id": 6,
+  "title": "Nasu Buta Miso Yaki (Sticky Miso Pork & Aubergine)",
+  "origin": "Japan 🇯🇵",
+  "description": "An authentic, easy-to-cook traybake. Pork shoulder steaks and aubergine chunks roasted in a sweet, savory miso glaze until sticky and tender.",
+  "image": "images/recipes/nasu-buta-miso-yaki.jpg",
+  "prepTime": "10 min",
+  "cookTime": "30 min",
+  "servings": 4,
+  "category": "Dinner",
+  "calories": 520,
+  "ingredients": [
+    { "name": "Pork Shoulder Steaks", "amount": "4", "amountMetric": "4 (600g)", "category": "Meat", "aisle": "12" },
+    { "name": "Aubergines (Eggplant)", "amount": "2 large", "amountMetric": "2 large", "category": "Produce", "aisle": "1" },
+    { "name": "Spring Onions", "amount": "1 bunch", "amountMetric": "1 bunch", "category": "Produce", "aisle": "1" },
+    { "name": "Fresh Ginger", "amount": "1 thumb", "amountMetric": "1 thumb", "category": "Produce", "aisle": "1" },
+    { "name": "Garlic Cloves", "amount": "2", "amountMetric": "2", "category": "Produce", "aisle": "1" },
+    { "name": "White Miso Paste", "amount": "3 tbsp", "amountMetric": "3 tbsp", "category": "World Foods", "aisle": "5" },
+    { "name": "Soy Sauce", "amount": "2 tbsp", "amountMetric": "2 tbsp", "category": "World Foods", "aisle": "5" },
+    { "name": "Honey", "amount": "2 tbsp", "amountMetric": "2 tbsp", "category": "Pantry", "aisle": "4" },
+    { "name": "Sesame Oil", "amount": "1 tbsp", "amountMetric": "1 tbsp", "category": "World Foods", "aisle": "5" },
+    { "name": "Mirin (or 1tsp sugar+water)", "amount": "1 tbsp", "amountMetric": "1 tbsp", "category": "World Foods", "aisle": "5" },
+    { "name": "Toasted Sesame Seeds", "amount": "1 tbsp", "amountMetric": "1 tbsp", "category": "Pantry", "aisle": "5" }
+  ],
+  "steps": [
+    "Preheat oven to 200°C (180°C Fan) / 400°F. Grab a deep baking tray.",
+    "THE GLAZE: In a small bowl, whisk Miso, Soy Sauce, Honey, Sesame Oil, Mirin, Grated Ginger, and Crushed Garlic into a thick paste.",
+    "Cut Aubergines into bite-sized chunks. Place them and the Pork Steaks into the tray.",
+    "Pour over the glaze. Massage it into the meat and veg with your hands so everything is well coated.",
+    "Spread the aubergines out around the pork. Bake for 30 minutes.",
+    "Halfway through (15 mins), flip the steaks and stir the veg.",
+    "Finish by sprinkling generously with sliced Spring Onions and Sesame Seeds. Serve with plain rice."
+  ],
+  "tips": [
+    "The Meat Cut: Do NOT use pork loin steaks. They are too lean and will become dry in the oven. Shoulder steaks have the necessary fat content to stay juicy and baste the vegetables.",
+    "The Umami Secret: White Miso is a fermented soybean paste. It adds a deep savoury richness that salt alone cannot achieve.",
+    "Mirin Alternative: If you cannot find Mirin (Japanese rice wine), you can substitute it with 1 tsp of sugar dissolved in 1 tbsp of water."
+  ]
+}

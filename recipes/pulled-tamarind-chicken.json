@@ -1,0 +1,40 @@
+{
+  "id": 7,
+  "title": "Pulled Tamarind Chicken & Sweet Potato One-Pot",
+  "origin": "SE Asian Fusion 🌏",
+  "description": "A vibrant, sticky braise. Chicken thighs are cooked slowly in a sour-sweet tamarind sauce until tender enough to pull apart, served alongside caramelised sweet potatoes.",
+  "image": "images/recipes/pulled-tamarind-chicken.jpg",
+  "prepTime": "15 min",
+  "cookTime": "1 hr 5 min",
+  "servings": 4,
+  "category": "Dinner",
+  "calories": 540,
+  "ingredients": [
+    { "name": "Chicken Thighs (boneless/skinless)", "amount": "8", "amountMetric": "8 (800g)", "category": "Meat", "aisle": "12" },
+    { "name": "Sweet Potatoes (Large)", "amount": "2", "amountMetric": "2 (800g total)", "category": "Produce", "aisle": "1" },
+    { "name": "Red Onions", "amount": "2", "amountMetric": "2", "category": "Produce", "aisle": "1" },
+    { "name": "Fresh Ginger", "amount": "1 thumb", "amountMetric": "1 thumb", "category": "Produce", "aisle": "1" },
+    { "name": "Garlic Cloves", "amount": "3", "amountMetric": "3", "category": "Produce", "aisle": "1" },
+    { "name": "Fresh Red Chilli", "amount": "1", "amountMetric": "1", "category": "Produce", "aisle": "1" },
+    { "name": "Tamarind Paste (Concentrate)", "amount": "3 tbsp", "amountMetric": "3 tbsp", "category": "World Foods", "aisle": "5" },
+    { "name": "Light Brown Sugar", "amount": "3 tbsp", "amountMetric": "3 tbsp", "category": "Pantry", "aisle": "4" },
+    { "name": "Soy Sauce", "amount": "2 tbsp", "amountMetric": "2 tbsp", "category": "Pantry", "aisle": "5" },
+    { "name": "Fish Sauce (or Miso)", "amount": "1 tbsp", "amountMetric": "1 tbsp", "category": "World Foods", "aisle": "5" },
+    { "name": "Fresh Coriander", "amount": "1 bunch", "amountMetric": "1 bunch", "category": "Produce", "aisle": "1" }
+  ],
+  "steps": [
+    "Preheat oven to 180°C (350°F).",
+    "THE SAUCE: Whisk Tamarind, Sugar, Soy Sauce, Fish Sauce (or Miso), Grated Ginger, Crushed Garlic, Sliced Chilli, and 1/2 cup Water.",
+    "Peel Sweet Potatoes and cut into large 3cm (1 inch) chunks. Cut onions into wedges. Place in deep baking dish.",
+    "Nestle the Chicken Thighs among the vegetables.",
+    "Pour the sauce over everything. Toss to coat.",
+    "Cover tightly with foil. Bake for 45 minutes.",
+    "Remove foil. Bake UNCOVERED for 20 mins to reduce sauce and darken.",
+    "Use two forks to shred (pull) the chicken directly in the pot. Stir to mix with the sticky sauce and soft potatoes. Top with Coriander."
+  ],
+  "tips": [
+    "Potato Size: Ensure your sweet potato chunks are large (approx 3cm). If they are too small, they will turn to mush during the long braise.",
+    "Fish Sauce Alternative: If you don't like Fish Sauce, substitute it with 1 tbsp of White Miso Paste. It adds the same necessary salty 'umami' depth without the smell.",
+    "Tamarind Potency: Different brands of tamarind paste vary in strength. Taste your sauce before cooking—it should be pleasantly sour but balanced by the sugar."
+  ]
+}

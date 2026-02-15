@@ -1,0 +1,30 @@
+{
+  "id": 4,
+  "title": "Zesty Chilli-Lime Dressing",
+  "origin": "Global 🌎",
+  "description": "A sharp, acidic, and spicy macerated dressing designed to cut through rich meat sauces. Essential for the Smoky Chilli.",
+  "image": "images/recipes/zesty-chilli-lime-dressing.jpg",
+  "prepTime": "5 min",
+  "cookTime": "0 min",
+  "servings": 6,
+  "category": "Side",
+  "calories": 45,
+  "ingredients": [
+    { "name": "Fresh Red Chillies", "amount": "2", "amountMetric": "2", "category": "Produce", "aisle": "1" },
+    { "name": "Dried Chilli Flakes (Alternative)", "amount": "1 tsp", "amountMetric": "1 tsp", "category": "Pantry", "aisle": "5" },
+    { "name": "Limes", "amount": "2", "amountMetric": "2", "category": "Produce", "aisle": "1" },
+    { "name": "Sea Salt", "amount": "1 pinch", "amountMetric": "1 pinch", "category": "Pantry", "aisle": "5" },
+    { "name": "Olive Oil", "amount": "1 tsp", "amountMetric": "1 tsp", "category": "Pantry", "aisle": "4" }
+  ],
+  "steps": [
+    "If using FRESH: Finely slice the chillies (keep seeds for heat). Place in a small bowl.",
+    "If using DRIED: Place flakes in a small bowl.",
+    "Squeeze the juice of 2 limes over the chilli. Add a pinch of salt and the oil.",
+    "Mix well and press down with a spoon.",
+    "Let sit for at least 10 minutes before serving. This 'cures' the chilli and extracts the heat into the juice."
+  ],
+  "tips": [
+    "Curing: The acid in the lime juice 'cures' fresh chillies, softening their bite, or rehydrates dried flakes so they aren't papery.",
+    "Balance: This side is designed to add acid. The main Chilli con Carne is rich and savory; this dressing cuts through that fat for a balanced palate."
+  ]
+}
