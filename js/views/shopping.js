@@ -1,5 +1,5 @@
 // Shopping list view module
-import { getState, setState } from '../state.js';
+import { getState, setState, setStateQuiet } from '../state.js';
 import { createIcon, createButton } from '../components/ui.js';
 import { createHeaderToggle } from './grid.js';
 
@@ -209,21 +209,8 @@ function toggleShoppingItem(id) {
     item.id === id ? { ...item, checked: !item.checked } : item
   );
   
-  // Update state directly without triggering full re-render
-  Object.assign(state, { shoppingList: newList });
-  
-  // Save to localStorage
-  const persistableState = {
-    shoppingList: state.shoppingList,
-    selectedRecipes: state.selectedRecipes,
-    sortMode: state.sortMode,
-    useMetric: state.useMetric
-  };
-  try {
-    localStorage.setItem('recipebliss-state', JSON.stringify(persistableState));
-  } catch (error) {
-    console.warn('Failed to save state to localStorage:', error);
-  }
+  // Update state without triggering full re-render
+  setStateQuiet({ shoppingList: newList });
   
   // Targeted DOM update: Find and update only the changed item
   const itemEl = document.querySelector(`.shopping-item[data-item-id="${id}"]`);
@@ -293,11 +280,11 @@ function toggleShoppingItem(id) {
   if (nav) {
     const badge = nav.querySelector('.nav-badge');
     if (badge) {
+      badge.textContent = newList.length;
       if (newList.length > 0) {
-        badge.textContent = newList.length;
-        badge.style.display = 'block';
+        badge.classList.add('visible');
       } else {
-        badge.style.display = 'none';
+        badge.classList.remove('visible');
       }
     }
   }

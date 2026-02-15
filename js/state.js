@@ -28,21 +28,17 @@ export function getState() {
  */
 export function setState(updates) {
   Object.assign(state, updates);
-  
-  // Save persistable state to localStorage
-  const persistableState = {
-    shoppingList: state.shoppingList,
-    selectedRecipes: state.selectedRecipes,
-    sortMode: state.sortMode,
-    useMetric: state.useMetric
-  };
-  try {
-    localStorage.setItem('recipebliss-state', JSON.stringify(persistableState));
-  } catch (error) {
-    console.warn('Failed to save state to localStorage:', error);
-  }
-  
+  savePersistableState();
   notifyListeners();
+}
+
+/**
+ * Update state without triggering listeners (for internal optimizations)
+ * @param {Object} updates - Partial state updates
+ */
+export function setStateQuiet(updates) {
+  Object.assign(state, updates);
+  savePersistableState();
 }
 
 /**
@@ -63,6 +59,23 @@ export function subscribe(listener) {
  */
 function notifyListeners() {
   listeners.forEach(listener => listener(state));
+}
+
+/**
+ * Save persistable state to localStorage
+ */
+function savePersistableState() {
+  const persistableState = {
+    shoppingList: state.shoppingList,
+    selectedRecipes: state.selectedRecipes,
+    sortMode: state.sortMode,
+    useMetric: state.useMetric
+  };
+  try {
+    localStorage.setItem('recipebliss-state', JSON.stringify(persistableState));
+  } catch (error) {
+    console.warn('Failed to save state to localStorage:', error);
+  }
 }
 
 /**

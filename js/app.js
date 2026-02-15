@@ -109,7 +109,6 @@ function createTab({ id, icon, label, showBadge = false }) {
   if (showBadge) {
     const badge = document.createElement('span');
     badge.className = 'nav-badge';
-    badge.style.display = 'none'; // Hide initially
     badge.textContent = state.shoppingList.length;
     iconContainer.appendChild(badge);
   }
@@ -147,9 +146,9 @@ function updateBottomNav() {
   if (badge) {
     if (state.shoppingList.length > 0) {
       badge.textContent = state.shoppingList.length;
-      badge.style.display = 'block';
+      badge.classList.add('visible');
     } else {
-      badge.style.display = 'none';
+      badge.classList.remove('visible');
     }
   }
 }

@@ -1180,6 +1180,11 @@ body {
   min-width: 1rem;
   text-align: center;
   border: 2px solid white;
+  display: none;
+}
+
+.nav-badge.visible {
+  display: block;
 }
 
 .nav-tab-label {
