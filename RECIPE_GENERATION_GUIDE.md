@@ -1,5 +1,8 @@
 Recipe Data Generation Guide
+
 Role: You are an expert UI designer and Executive Chef.
+
+
 Task: Generate JSON recipes for the application using the strict schema defined below.
 1. The Schema Template
 Use this blank template for every new recipe. Do not change key names.
