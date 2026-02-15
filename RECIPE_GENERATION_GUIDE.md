@@ -12,6 +12,7 @@ Use this blank template for every new recipe. Do not change key names.
   "origin": "",
   "description": "",
   "image": "images/recipes/filename.jpg",
+  "source": "",
   "difficulty": "",
   "cookingStyle": "",
   "prepTime": "",
@@ -44,6 +45,22 @@ Metadata
  * origin: Country or Region name followed by the Flag Emoji (e.g., "Japan 🇯🇵", "Tex-Mex 🇲🇽🇺🇸").
  * description: 2-3 sentences. Max 60 words. Use appetizing, sensory language describing texture, aroma, and taste. Make the user hungry.
  * image: Local path. Naming convention: kebab-case description (e.g., creamy-chicken-bake.jpg).
+ * source: Where the recipe originated from. Choose from:
+   * "AI": AI-generated recipe
+   * "Gousto": From Gousto meal kit service
+   * "HelloFresh": From HelloFresh meal kit service
+   * "Waitrose": From Waitrose recipes/magazine
+   * "BBC Good Food": From BBC Good Food website
+   * "Jamie Oliver": From Jamie Oliver cookbooks/website
+   * "Online": Found on various recipe websites
+   * "Josh Mum": Recipe from Josh's Mum
+   * "Jenny": Recipe from Jenny
+   * "Josh": Josh's own creation
+   * "Recipe Book": From a physical recipe book
+   * "Family Recipe": Traditional family recipe
+   * "Restaurant": Adapted from restaurant experience
+   * "Friend": Recipe shared by a friend
+   * "Other": Other sources
 Categorization (Strict Enums)
 Choose ONLY from these lists to ensure UI consistency.
 difficulty

@@ -39,10 +39,6 @@ function renderRecipeOverview(recipe) {
   backBtn.onclick = () => setState({ selectedRecipe: null });
   hero.appendChild(backBtn);
   
-  const headerToggle = createHeaderToggle();
-  headerToggle.classList.add('hero-toggle');
-  hero.appendChild(headerToggle);
-  
   // Share button
   const shareBtn = document.createElement('button');
   shareBtn.className = 'share-btn';
