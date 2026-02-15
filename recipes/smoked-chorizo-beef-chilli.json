@@ -4,10 +4,13 @@
   "origin": "Tex-Mex 🇲🇽🇺🇸",
   "description": "A complex, thick stovetop ragu. The smoky paprika from the chorizo permeates the beef, while a secret addition adds a glossy richness found in top restaurants.",
   "image": "images/recipes/smoked-chorizo-beef-chilli.jpg",
+  "difficulty": "Medium",
+  "cookingStyle": "Stovetop",
   "prepTime": "15 min",
   "cookTime": "60 min",
   "servings": 6,
   "category": "Dinner",
+  "tags": ["Beef", "Pork", "Spicy"],
   "calories": 580,
   "ingredients": [
     { "name": "Beef Mince (Lean)", "amount": "1 lb", "amountMetric": "500g", "category": "Meat", "aisle": "12" },
