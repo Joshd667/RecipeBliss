@@ -37,6 +37,9 @@
   --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
   --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
   --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+  
+  /* Layout */
+  --sidebar-width: 5rem;
 }
 
 /* Reset & Base Styles */
@@ -1268,7 +1271,7 @@ body {
     top: 0;
     bottom: 0;
     right: auto;
-    width: 5rem;
+    width: var(--sidebar-width);
     max-width: none;
     transform: none;
     flex-direction: column;
@@ -1292,7 +1295,7 @@ body {
   .recipes-grid-view,
   .shopping-list-view,
   .recipe-detail-view {
-    margin-left: 5rem;
+    margin-left: var(--sidebar-width);
     padding-left: 2rem;
     padding-right: 2rem;
     max-width: 1200px;
@@ -1334,7 +1337,7 @@ body {
   
   /* Selection banner positioning */
   .selection-banner {
-    left: 7rem;
+    left: calc(var(--sidebar-width) + 2rem);
     right: 2rem;
     bottom: 2rem;
     max-width: 1150px;
@@ -1358,7 +1361,7 @@ body {
   
   .delete-all-btn {
     bottom: 2rem;
-    left: 7rem;
+    left: calc(var(--sidebar-width) + 2rem);
   }
   
   /* Recipe detail view improvements */
@@ -1376,7 +1379,7 @@ body {
   
   /* Step by step view */
   .step-by-step-view {
-    margin-left: 5rem;
+    margin-left: var(--sidebar-width);
   }
 }
 
@@ -1446,6 +1449,6 @@ body {
   .shopping-list-view,
   .recipe-detail-view {
     margin-left: auto;
-    padding-left: calc(5rem + 3rem);
+    padding-left: calc(var(--sidebar-width) + 3rem);
   }
 }

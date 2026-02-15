@@ -316,6 +316,8 @@ function clearCheckedItems() {
 
 /**
  * Delete all items from shopping list
+ * Note: Uses native confirm() for simplicity. In production, consider
+ * implementing a custom modal with proper ARIA attributes for better accessibility.
  */
 function deleteAllItems() {
   if (confirm('Are you sure you want to delete all items from your shopping list?')) {
