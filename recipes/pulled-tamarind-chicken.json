@@ -4,10 +4,13 @@
   "origin": "SE Asian Fusion 🌏",
   "description": "A vibrant, sticky braise. Chicken thighs are cooked slowly in a sour-sweet tamarind sauce until tender enough to pull apart, served alongside caramelised sweet potatoes.",
   "image": "images/recipes/pulled-tamarind-chicken.jpg",
+  "difficulty": "Easy",
+  "cookingStyle": "One Pot",
   "prepTime": "15 min",
   "cookTime": "1 hr 5 min",
   "servings": 4,
   "category": "Dinner",
+  "tags": ["Chicken", "Dairy Free", "Savory"],
   "calories": 540,
   "ingredients": [
     { "name": "Chicken Thighs (boneless/skinless)", "amount": "8", "amountMetric": "8 (800g)", "category": "Meat", "aisle": "12" },
