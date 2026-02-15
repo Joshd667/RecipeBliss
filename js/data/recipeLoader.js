@@ -1,24 +1,17 @@
 // Recipe data loader
 
-const RECIPE_FILES = [
-  'creamy-chicken-rice-casserole.json',
-  'smoked-chorizo-beef-chilli.json',
-  'vegetarian-pastel-azteca.json',
-  'nasu-buta-miso-yaki.json',
-  'pulled-tamarind-chicken.json',
-  'bahian-coconut-lime-fish.json',
-  'perfect-fluffy-rice.json',
-  'zesty-chilli-lime-dressing.json',
-  'house-blend-fajita-seasoning.json'
-];
-
 /**
  * Load all recipe JSON files
  * @returns {Promise<Array>} - Array of recipe objects
  */
 export async function loadAllRecipes() {
   try {
-    const promises = RECIPE_FILES.map(filename =>
+    // Fetch the recipe index manifest
+    const indexResponse = await fetch('recipes/index.json');
+    const recipeFiles = await indexResponse.json();
+    
+    // Fetch all recipe JSON files
+    const promises = recipeFiles.map(filename =>
       fetch(`recipes/${filename}`).then(res => res.json())
     );
     const recipes = await Promise.all(promises);

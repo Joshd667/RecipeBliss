@@ -168,6 +168,8 @@ body {
 
 /* Recipes Grid View */
 .recipes-grid-view {
+  display: flex;
+  flex-direction: column;
   padding: 1.5rem;
   padding-bottom: 6rem;
   background: rgba(248, 250, 252, 0.5);
@@ -280,21 +282,21 @@ body {
   box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
 }
 
-/* Recipe Grid */
-.recipe-grid {
+/* Recipe Cards Grid */
+.recipe-cards-grid {
   display: grid;
   grid-template-columns: 1fr;
   gap: 1.5rem;
 }
 
 @media (min-width: 768px) {
-  .recipe-grid {
+  .recipe-cards-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media (min-width: 1024px) {
-  .recipe-grid {
+  .recipe-cards-grid {
     grid-template-columns: repeat(3, 1fr);
   }
 }
@@ -1326,8 +1328,8 @@ body {
     font-size: 1rem;
   }
   
-  /* Recipe grid - already has 2-3 column layout */
-  .recipe-grid {
+  /* Recipe cards grid - already has 2-3 column layout */
+  .recipe-cards-grid {
     gap: 2rem;
   }
   
