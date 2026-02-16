@@ -1,7 +1,7 @@
 // Shopping list view module
 import { getState, setState, setStateQuiet } from '../state.js';
 import { createIcon, createButton } from '../components/ui.js';
-import { createHeaderToggle } from './grid.js';
+import { escapeHtml, getDisplayAmount } from '../utils/helpers.js';
 import { encodeBasket, getBasketShareUrl, copyToClipboard } from '../utils/sharing.js';
 
 /**
@@ -12,50 +12,54 @@ export function renderShoppingList() {
   const container = document.getElementById('app');
   container.innerHTML = '';
   container.className = 'shopping-list-view';
-  
+
   if (state.shoppingList.length === 0) {
     renderEmptyState(container);
     return;
   }
-  
+
   // Header
   const header = document.createElement('div');
   header.className = 'shopping-header';
-  
+
   const headerTop = document.createElement('div');
   headerTop.className = 'shopping-header-top';
   headerTop.innerHTML = '<h1 class="page-title">Shopping List</h1>';
-  
+
   const headerActions = document.createElement('div');
   headerActions.className = 'header-actions';
-  headerActions.appendChild(createHeaderToggle());
-  
-  // Share basket button
-  const shareBasketBtn = document.createElement('button');
-  shareBasketBtn.className = 'share-basket-btn';
-  shareBasketBtn.innerHTML = createIcon('Share2', 20).outerHTML;
-  shareBasketBtn.onclick = () => showBasketShareModal();
-  headerActions.appendChild(shareBasketBtn);
-  
+
+  // Counter
   const checkedCount = state.shoppingList.filter(i => i.checked).length;
   const counter = document.createElement('div');
   counter.className = 'shopping-counter';
   counter.textContent = `${checkedCount}/${state.shoppingList.length}`;
   headerActions.appendChild(counter);
-  
+
+  // Share basket button
+  const shareBasketBtn = document.createElement('button');
+  shareBasketBtn.className = 'header-icon-btn';
+  shareBasketBtn.setAttribute('aria-label', 'Share basket');
+  shareBasketBtn.innerHTML = createIcon('Share2', 20).outerHTML;
+  shareBasketBtn.onclick = () => showBasketShareModal();
+  headerActions.appendChild(shareBasketBtn);
+
   headerTop.appendChild(headerActions);
   header.appendChild(headerTop);
-  
-  // Sort tabs
+
+  // Sort tabs + action buttons row
+  const toolbarRow = document.createElement('div');
+  toolbarRow.className = 'shopping-toolbar';
+
   const sortTabs = document.createElement('div');
   sortTabs.className = 'sort-tabs';
-  
+
   const modes = [
     { id: 'aisle', label: 'By Aisle' },
     { id: 'category', label: 'By Type' },
     { id: 'alpha', label: 'A-Z' }
   ];
-  
+
   modes.forEach(mode => {
     const tab = document.createElement('button');
     tab.className = `sort-tab ${state.sortMode === mode.id ? 'active' : ''}`;
@@ -63,65 +67,178 @@ export function renderShoppingList() {
     tab.onclick = () => setState({ sortMode: mode.id });
     sortTabs.appendChild(tab);
   });
-  
-  header.appendChild(sortTabs);
+
+  toolbarRow.appendChild(sortTabs);
+
+  // Toolbar right side: clear checked + delete all
+  const toolbarActions = document.createElement('div');
+  toolbarActions.className = 'toolbar-actions';
+
+  // Clear checked button (proper button with text)
+  if (state.shoppingList.some(i => i.checked)) {
+    const clearBtn = document.createElement('button');
+    clearBtn.className = 'clear-checked-btn-inline';
+    clearBtn.innerHTML = `${createIcon('Check', 14).outerHTML} <span>Clear</span>`;
+    clearBtn.onclick = clearCheckedItems;
+    toolbarActions.appendChild(clearBtn);
+  }
+
+  // Delete all icon button
+  const deleteAllBtn = document.createElement('button');
+  deleteAllBtn.className = 'header-icon-btn danger';
+  deleteAllBtn.setAttribute('aria-label', 'Delete all items');
+  deleteAllBtn.innerHTML = createIcon('Trash2', 18).outerHTML;
+  deleteAllBtn.onclick = deleteAllItems;
+  toolbarActions.appendChild(deleteAllBtn);
+
+  toolbarRow.appendChild(toolbarActions);
+  header.appendChild(toolbarRow);
+
+  // Add item input row
+  header.appendChild(createAddItemRow());
+
   container.appendChild(header);
-  
+
   // Shopping list content
   const content = document.createElement('div');
   content.className = 'shopping-content';
-  
+
   const groups = getGroupedItems();
-  
+
   Object.entries(groups).forEach(([groupName, items]) => {
     const groupSection = document.createElement('div');
     groupSection.className = 'shopping-group';
-    
+
     const groupTitle = document.createElement('h3');
     groupTitle.className = 'group-title';
     groupTitle.textContent = groupName;
     groupSection.appendChild(groupTitle);
-    
+
     const groupList = document.createElement('div');
     groupList.className = 'group-list';
-    
+
     items.forEach(item => {
       const itemEl = createShoppingItem(item);
       groupList.appendChild(itemEl);
     });
-    
+
     groupSection.appendChild(groupList);
     content.appendChild(groupSection);
   });
-  
+
   container.appendChild(content);
-  
-  // Clear checked button
-  if (state.shoppingList.some(i => i.checked)) {
-    const clearBtn = document.createElement('button');
-    clearBtn.className = 'clear-checked-btn';
-    clearBtn.appendChild(createIcon('Trash2', 18));
-    const text = document.createElement('span');
-    text.textContent = 'Clear Checked';
-    clearBtn.appendChild(text);
-    clearBtn.onclick = clearCheckedItems;
-    container.appendChild(clearBtn);
-  }
-  
-  // Delete all button
-  if (state.shoppingList.length > 0) {
-    const deleteAllBtn = document.createElement('button');
-    deleteAllBtn.className = 'delete-all-btn';
-    const icon = createIcon('Trash2', 18);
-    if (icon) {
-      deleteAllBtn.appendChild(icon);
+}
+
+/**
+ * Create the add-item input row
+ */
+function createAddItemRow() {
+  const wrapper = document.createElement('div');
+  wrapper.className = 'add-item-wrapper';
+
+  const row = document.createElement('div');
+  row.className = 'add-item-row';
+
+  const input = document.createElement('input');
+  input.type = 'text';
+  input.className = 'add-item-input';
+  input.placeholder = 'Add item (e.g. 2 onions)...';
+
+  // Category Select
+  const categorySelect = document.createElement('select');
+  categorySelect.className = 'add-item-select';
+  categorySelect.innerHTML = '<option value="">Category (Optional)</option>';
+  const categories = [
+    'Produce', 'Meat & Poultry', 'Seafood', 'Dairy & Eggs', 'Bakery',
+    'Frozen', 'Canned & Jarred', 'Pasta, Rice & Grains', 'Cereal & Breakfast',
+    'Baking & Spices', 'Condiments & Sauces', 'Snacks', 'Beverages',
+    'World Foods', 'Household'
+  ];
+  categories.forEach(cat => {
+    categorySelect.innerHTML += `<option value="${cat}">${cat}</option>`;
+  });
+
+  // Aisle Select
+  const aisleSelect = document.createElement('select');
+  aisleSelect.className = 'add-item-select';
+  aisleSelect.innerHTML = '<option value="">Aisle (Optional)</option>';
+  const aisles = [
+    { id: '1', name: '1: Bakery' },
+    { id: '2', name: '2: Fruit & Veg' },
+    { id: '3', name: '3: Meat & Fish' },
+    { id: '4', name: '4: Dairy & Eggs' },
+    { id: '5', name: '5: Breakfast' },
+    { id: '6', name: '6: Pantry' },
+    { id: '7', name: '7: Baking & Spices' },
+    { id: '8', name: '8: Snacks' },
+    { id: '9', name: '9: Drinks' },
+    { id: '10', name: '10: Household' },
+    { id: '11', name: '11: Frozen' }
+  ];
+  aisles.forEach(a => {
+    aisleSelect.innerHTML += `<option value="${a.id}">${a.name}</option>`;
+  });
+
+  const handleAdd = () => {
+    if (input.value.trim()) {
+      addManualItem(input.value.trim(), categorySelect.value, aisleSelect.value);
+      input.value = '';
+      categorySelect.value = '';
+      aisleSelect.value = '';
+      input.focus();
     }
-    const text = document.createElement('span');
-    text.textContent = 'Delete All';
-    deleteAllBtn.appendChild(text);
-    deleteAllBtn.onclick = deleteAllItems;
-    container.appendChild(deleteAllBtn);
+  };
+
+  input.onkeydown = (e) => {
+    if (e.key === 'Enter') handleAdd();
+  };
+
+  const addBtn = document.createElement('button');
+  addBtn.className = 'add-item-btn';
+  addBtn.innerHTML = createIcon('Plus', 20).outerHTML;
+  addBtn.setAttribute('aria-label', 'Add item');
+  addBtn.onclick = handleAdd;
+
+  row.appendChild(input);
+  row.appendChild(categorySelect);
+  row.appendChild(aisleSelect);
+  row.appendChild(addBtn);
+
+  wrapper.appendChild(row);
+  return wrapper;
+}
+
+/**
+ * Parse and add a manually entered item
+ */
+function addManualItem(text, category, aisle) {
+  const state = getState();
+
+  // Try to parse amount from the beginning
+  const amountMatch = text.match(/^(\d+[\d/.]*\s*(?:g|kg|ml|l|oz|lb|cup|cups|tbsp|tsp|x|pcs)?)\s+(.+)$/i);
+
+  let name, amount;
+  if (amountMatch) {
+    amount = amountMatch[1].trim();
+    name = amountMatch[2].trim();
+  } else {
+    name = text;
+    amount = '';
   }
+
+  const newItem = {
+    id: `manual-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+    name: name.charAt(0).toUpperCase() + name.slice(1),
+    amount: amount,
+    amountMetric: amount,
+    checked: false,
+    category: category || 'Other',
+    aisle: aisle || 'Other'
+  };
+
+  setState({
+    shoppingList: [...state.shoppingList, newItem]
+  });
 }
 
 /**
@@ -130,55 +247,54 @@ export function renderShoppingList() {
 function renderEmptyState(container) {
   const empty = document.createElement('div');
   empty.className = 'empty-state';
-  
-  const headerToggle = createHeaderToggle();
-  headerToggle.classList.add('empty-header-toggle');
-  empty.appendChild(headerToggle);
-  
+
   const icon = document.createElement('div');
   icon.className = 'empty-icon';
   icon.appendChild(createIcon('ShoppingCart', 40));
   empty.appendChild(icon);
-  
+
   const title = document.createElement('h2');
   title.className = 'empty-title';
   title.textContent = 'Your list is empty';
   empty.appendChild(title);
-  
+
   const subtitle = document.createElement('p');
   subtitle.className = 'empty-subtitle';
-  subtitle.textContent = 'Start browsing recipes and add ingredients to build your shopping plan.';
+  subtitle.textContent = 'Add items manually below, or browse recipes to add ingredients.';
   empty.appendChild(subtitle);
-  
+
+  // Add item input on empty state too
+  empty.appendChild(createAddItemRow());
+
   const browseBtn = createButton({
     text: 'Browse Recipes',
     onClick: () => setState({ activeTab: 'recipes' }),
     variant: 'primary'
   });
   empty.appendChild(browseBtn);
-  
+
   container.appendChild(empty);
 }
 
 /**
  * Show basket share modal
  */
-function showBasketShareModal() {
+async function showBasketShareModal() {
   const state = getState();
-  const encodedBasket = encodeBasket(state.shoppingList, state.selectedRecipes, state.useMetric);
-  
+  const encodedBasket = await encodeBasket(state.shoppingList, state.selectedRecipes, state.useMetric);
+
   if (!encodedBasket) {
     alert('Failed to encode shopping list. This may be due to serialization issues with your basket data. Please try removing some items and try again.');
     return;
   }
-  
+
   const shareUrl = getBasketShareUrl(encodedBasket);
-  
+
   if (!shareUrl) {
     alert('Shopping list is too large to share via URL. Please reduce the number of items and try again.');
     return;
   }
-  
+
   // Create modal overlay
   const modal = document.createElement('div');
   modal.className = 'modal-overlay';
@@ -201,14 +317,14 @@ function showBasketShareModal() {
       </div>
     </div>
   `;
-  
+
   // Add event listeners
   const closeBtn = modal.querySelector('.modal-close-btn');
   closeBtn.onclick = () => document.body.removeChild(modal);
-  
+
   const copyBtn = modal.querySelector('.copy-btn');
   const urlInput = modal.querySelector('.share-url-input');
-  
+
   copyBtn.onclick = async () => {
     const success = await copyToClipboard(shareUrl);
     if (success) {
@@ -221,14 +337,14 @@ function showBasketShareModal() {
       }, 2000);
     }
   };
-  
+
   // Close on overlay click
   modal.onclick = (e) => {
     if (e.target === modal) {
       document.body.removeChild(modal);
     }
   };
-  
+
   document.body.appendChild(modal);
 }
 
@@ -239,24 +355,56 @@ function createShoppingItem(item) {
   const state = getState();
   const itemEl = document.createElement('div');
   itemEl.className = `shopping-item ${item.checked ? 'checked' : ''}`;
-  itemEl.dataset.itemId = item.id; // Add data attribute to identify the item
+  itemEl.dataset.itemId = item.id;
   itemEl.onclick = () => toggleShoppingItem(item.id);
-  
+
+  // Custom Checkbox Container
+  const checkboxContainer = document.createElement('div');
+  checkboxContainer.className = 'shopping-checkbox-container';
+
   const checkbox = document.createElement('div');
   checkbox.className = `shopping-checkbox ${item.checked ? 'checked' : ''}`;
   if (item.checked) {
-    checkbox.appendChild(createIcon('CheckCircle2', 14));
+    checkbox.innerHTML = createIcon('Check', 12).outerHTML;
   }
-  itemEl.appendChild(checkbox);
-  
+  checkboxContainer.appendChild(checkbox);
+  itemEl.appendChild(checkboxContainer);
+
+  // Content
   const content = document.createElement('div');
   content.className = 'shopping-item-content';
-  content.innerHTML = `
-    <div class="shopping-item-name ${item.checked ? 'checked' : ''}">${item.name}</div>
-    <div class="shopping-item-meta">${getAmount(item)} • ${item.category}</div>
-  `;
+
+  const nameEl = document.createElement('div');
+  nameEl.className = `shopping-item-name ${item.checked ? 'checked' : ''}`;
+  nameEl.textContent = item.name;
+
+  const metaEl = document.createElement('div');
+  metaEl.className = 'shopping-item-meta';
+
+  // Create badges for amount and category
+  const amountBadge = document.createElement('span');
+  amountBadge.className = 'shopping-badge amount';
+  amountBadge.textContent = getAmount(item);
+
+  const catBadge = document.createElement('span');
+  catBadge.className = 'shopping-badge category';
+  catBadge.textContent = item.category;
+
+  if (getAmount(item)) metaEl.appendChild(amountBadge);
+  if (item.category) metaEl.appendChild(catBadge);
+
+  content.appendChild(nameEl);
+  content.appendChild(metaEl);
   itemEl.appendChild(content);
-  
+
+  // Aisle indicator if available
+  if (item.aisle) {
+    const aisleEl = document.createElement('div');
+    aisleEl.className = 'shopping-aisle';
+    aisleEl.textContent = `Aisle ${item.aisle}`;
+    itemEl.appendChild(aisleEl);
+  }
+
   return itemEl;
 }
 
@@ -266,7 +414,7 @@ function createShoppingItem(item) {
 function getGroupedItems() {
   const state = getState();
   let sorted = [...state.shoppingList];
-  
+
   // Sort
   if (state.sortMode === 'alpha') {
     sorted.sort((a, b) => a.name.localeCompare(b.name));
@@ -279,7 +427,7 @@ function getGroupedItems() {
       return aisleA - aisleB;
     });
   }
-  
+
   // Group
   const grouped = {};
   sorted.forEach(item => {
@@ -287,11 +435,11 @@ function getGroupedItems() {
     if (state.sortMode === 'category') key = item.category;
     if (state.sortMode === 'aisle') key = `Aisle ${item.aisle || '?'}`;
     if (state.sortMode === 'alpha') key = item.name[0].toUpperCase();
-    
+
     if (!grouped[key]) grouped[key] = [];
     grouped[key].push(item);
   });
-  
+
   return grouped;
 }
 
@@ -300,13 +448,13 @@ function getGroupedItems() {
  */
 function toggleShoppingItem(id) {
   const state = getState();
-  const newList = state.shoppingList.map(item => 
+  const newList = state.shoppingList.map(item =>
     item.id === id ? { ...item, checked: !item.checked } : item
   );
-  
+
   // Update state without triggering full re-render
   setStateQuiet({ shoppingList: newList });
-  
+
   // Targeted DOM update: Find and update only the changed item
   const itemEl = document.querySelector(`.shopping-item[data-item-id="${id}"]`);
   if (itemEl) {
@@ -318,19 +466,19 @@ function toggleShoppingItem(id) {
       } else {
         itemEl.classList.remove('checked');
       }
-      
+
       // Update checkbox
       const checkbox = itemEl.querySelector('.shopping-checkbox');
       if (checkbox) {
         if (item.checked) {
           checkbox.classList.add('checked');
-          checkbox.innerHTML = createIcon('CheckCircle2', 14).outerHTML;
+          checkbox.innerHTML = createIcon('Check', 12).outerHTML;
         } else {
           checkbox.classList.remove('checked');
           checkbox.innerHTML = '';
         }
       }
-      
+
       // Update item name
       const nameEl = itemEl.querySelector('.shopping-item-name');
       if (nameEl) {
@@ -342,18 +490,18 @@ function toggleShoppingItem(id) {
       }
     }
   }
-  
+
   // Update the counter in the header
   const counter = document.querySelector('.shopping-counter');
   if (counter) {
     const checkedCount = newList.filter(i => i.checked).length;
     counter.textContent = `${checkedCount}/${newList.length}`;
   }
-  
+
   // Update or show clear button
   const existingClearBtn = document.querySelector('.clear-checked-btn');
   const hasCheckedItems = newList.some(i => i.checked);
-  
+
   if (!hasCheckedItems && existingClearBtn) {
     existingClearBtn.remove();
   } else if (hasCheckedItems && !existingClearBtn) {
@@ -369,7 +517,7 @@ function toggleShoppingItem(id) {
       container.appendChild(clearBtn);
     }
   }
-  
+
   // Manually update bottom nav badge
   const nav = document.getElementById('bottom-nav');
   if (nav) {
@@ -410,5 +558,5 @@ function deleteAllItems() {
  */
 function getAmount(item) {
   const state = getState();
-  return state.useMetric ? item.amountMetric : item.amount;
+  return getDisplayAmount(item, state.useMetric);
 }

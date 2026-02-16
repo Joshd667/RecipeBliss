@@ -26,11 +26,11 @@ export function calculateTotalTime(recipe) {
     const match = timeStr.match(/(\d+)\s*min/i);
     return match ? parseInt(match[1]) : 0;
   };
-  
+
   const prepMins = parseTime(recipe.prepTime);
   const cookMins = parseTime(recipe.cookTime);
   const total = prepMins + cookMins;
-  
+
   // Return null if no time data available
   return total > 0 ? total : null;
 }
@@ -41,29 +41,36 @@ export function calculateTotalTime(recipe) {
  * @param {Object} filters - Filter criteria object
  * @returns {Array} - Filtered array of recipes
  */
-export function filterRecipes(recipes, filters) {
+export function filterRecipes(recipes, filters, ratings = {}) {
   return recipes.filter(recipe => {
+    // Rating filter
+    if (filters.minRating > 0) {
+      const rating = ratings[recipe.id] || 0;
+      if (rating < filters.minRating) {
+        return false;
+      }
+    }
     // Difficulty filter
     if (filters.difficulty && filters.difficulty.length > 0) {
       if (!filters.difficulty.includes(recipe.difficulty)) {
         return false;
       }
     }
-    
+
     // Cooking style filter
     if (filters.cookingStyle && filters.cookingStyle.length > 0) {
       if (!filters.cookingStyle.includes(recipe.cookingStyle)) {
         return false;
       }
     }
-    
+
     // Tags filter (recipe must have at least one of the selected tags)
     if (filters.tags && filters.tags.length > 0) {
       if (!recipe.tags || !recipe.tags.some(tag => filters.tags.includes(tag))) {
         return false;
       }
     }
-    
+
     // Time range filter (skip recipes without time data)
     if (filters.timeRange) {
       const totalTime = calculateTotalTime(recipe);
@@ -71,21 +78,21 @@ export function filterRecipes(recipes, filters) {
         return false;
       }
     }
-    
+
     // Calorie range filter
     if (filters.calorieRange && recipe.calories) {
       if (recipe.calories < filters.calorieRange[0] || recipe.calories > filters.calorieRange[1]) {
         return false;
       }
     }
-    
+
     // Category filter
     if (filters.categories && filters.categories.length > 0) {
       if (!filters.categories.includes(recipe.category)) {
         return false;
       }
     }
-    
+
     return true;
   });
 }
@@ -97,17 +104,19 @@ export function filterRecipes(recipes, filters) {
  */
 export function getActiveFilterCount(filters) {
   let count = 0;
-  
+
   if (filters.difficulty && filters.difficulty.length > 0) count++;
   if (filters.cookingStyle && filters.cookingStyle.length > 0) count++;
   if (filters.tags && filters.tags.length > 0) count++;
   if (filters.categories && filters.categories.length > 0) count++;
-  
+
   // Check if time range is not default (0-180)
   if (filters.timeRange && (filters.timeRange[0] > 0 || filters.timeRange[1] < 180)) count++;
-  
+
   // Check if calorie range is not default (0-1000)
   if (filters.calorieRange && (filters.calorieRange[0] > 0 || filters.calorieRange[1] < 1000)) count++;
-  
+
+  if (filters.minRating > 0) count++;
+
   return count;
 }
