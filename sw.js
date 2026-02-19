@@ -1,5 +1,5 @@
 // Service Worker for RecipeBliss PWA
-const CACHE_NAME = 'recipebliss-v2';
+const CACHE_NAME = 'recipebliss-v3';
 const CACHE_URLS = [
   './',
   './index.html',
