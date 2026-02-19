@@ -78,4 +78,61 @@
     {
       "name": "Fresh Coriander Leaves",
       "amount": "2 tsp",
-      "amountMetric":
+      "amountMetric": "2g",
+      "category": "Produce",
+      "aisle": "2"
+    },
+    {
+      "name": "Onions (sliced)",
+      "amount": "2 whole",
+      "amountMetric": "200g",
+      "category": "Produce",
+      "aisle": "2"
+    },
+    {
+      "name": "Curry Powder",
+      "amount": "1 tsp",
+      "amountMetric": "3g",
+      "category": "Baking & Spices",
+      "aisle": "7"
+    },
+    {
+      "name": "Groundnut Oil",
+      "amount": "6 tbsp",
+      "amountMetric": "90ml",
+      "category": "Baking & Spices",
+      "aisle": "7"
+    },
+    {
+      "name": "Salt",
+      "amount": "1 tsp",
+      "amountMetric": "5g",
+      "category": "Baking & Spices",
+      "aisle": "7"
+    },
+    {
+      "name": "Chicken Stock (optional)",
+      "amount": "1/2 cup",
+      "amountMetric": "120ml",
+      "category": "Baking & Spices",
+      "aisle": "7"
+    }
+  ],
+  "steps": [
+    "Wash and disjoint the chicken into 10 to 12 pieces.",
+    "Season the chicken pieces with salt, then place in a pot with the sliced onions, thyme, and curry powder. Cook for 30 to 40 minutes until the chicken is tender.",
+    "Blend the large onions, fresh chilli, garlic, and fresh tomatoes into a smooth paste.",
+    "Heat half of the groundnut oil in a frying pan and fry the cooked chicken pieces until they are browned but not overly dry. Remove the chicken and set aside.",
+    "Heat the remaining groundnut oil in a separate pot and fry the blended onion, chilli, and tomato mixture for 20 minutes until the mixture is fairly dry.",
+    "Stir the tomato puree into the sauce, adding a splash of stock if the mixture is too thick.",
+    "Return the fried chicken pieces to the sauce. Stir thoroughly, then simmer gently for 10 minutes, stirring frequently until the flavors are well blended.",
+    "Skim off and drain any excessive oil that rises to the top of the stew.",
+    "Remove the pot from the heat, stir in the chopped coriander leaves, and serve hot with boiled rice."
+  ],
+  "tips": [
+    "The Chef's Why: Using groundnut oil instead of standard vegetable oil imparts an authentic, earthy flavor that is essential to the depth of this traditional stew.",
+    "Technique: Frying the chicken after boiling seals the outside, giving it a firmer texture so it doesn't fall apart when simmering in the rich tomato sauce.",
+    "Alternatives: If you prefer lamb, coat a leg of lamb in the onion and curry spice mix and cook in a slow cooker for 6 to 8 hours until tender, skipping the disjointing and initial boiling step.",
+    "Texture Preference: The sauce can be blended at the very end for a completely smooth consistency, but leaving the onions chunky adds a great rustic texture to the final dish."
+  ]
+}
