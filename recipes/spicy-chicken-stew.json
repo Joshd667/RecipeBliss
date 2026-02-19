@@ -1,0 +1,81 @@
+{
+  "id": 1,
+  "title": "Spicy Chicken Stew",
+  "origin": "Nigeria 🇳🇬",
+  "description": "Tender pieces of chicken are simmered with aromatic spices, then fried and folded into a rich, spicy tomato and onion sauce. This hearty, vibrant stew features a base of groundnut oil for an earthy depth of flavor.",
+  "image": "images/recipes/spicy-chicken-stew.jpg",
+  "difficulty": "Medium",
+  "cookingStyle": "Stovetop",
+  "prepTime": "20 mins",
+  "cookTime": "1 hr 10 mins",
+  "servings": 6,
+  "category": "Dinner",
+  "tags": [
+    "Chicken",
+    "Spicy",
+    "African",
+    "Comfort Food",
+    "Rich"
+  ],
+  "calories": 650,
+  "ingredients": [
+    {
+      "name": "Whole Chicken",
+      "amount": "1 large",
+      "amountMetric": "1.5kg",
+      "category": "Meat & Poultry",
+      "aisle": "3"
+    },
+    {
+      "name": "Fresh Chilli",
+      "amount": "1 small",
+      "amountMetric": "15g",
+      "category": "Produce",
+      "aisle": "2"
+    },
+    {
+      "name": "Chilli Powder",
+      "amount": "1 tsp",
+      "amountMetric": "3g",
+      "category": "Baking & Spices",
+      "aisle": "7"
+    },
+    {
+      "name": "Fresh Tomatoes",
+      "amount": "2.2 lbs",
+      "amountMetric": "1kg",
+      "category": "Produce",
+      "aisle": "2"
+    },
+    {
+      "name": "Large Onions (for blending)",
+      "amount": "2 whole",
+      "amountMetric": "300g",
+      "category": "Produce",
+      "aisle": "2"
+    },
+    {
+      "name": "Garlic",
+      "amount": "2 cloves",
+      "amountMetric": "6g",
+      "category": "Produce",
+      "aisle": "2"
+    },
+    {
+      "name": "Tomato Puree",
+      "amount": "1 small tin",
+      "amountMetric": "140g",
+      "category": "Canned & Jarred",
+      "aisle": "6"
+    },
+    {
+      "name": "Dried Thyme",
+      "amount": "1 tsp",
+      "amountMetric": "1g",
+      "category": "Baking & Spices",
+      "aisle": "7"
+    },
+    {
+      "name": "Fresh Coriander Leaves",
+      "amount": "2 tsp",
+      "amountMetric":
